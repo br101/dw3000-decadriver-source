@@ -92,7 +92,7 @@ int dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
 						 uint8_t crc8)
 {
 	LOG_ERR("WRITE WITH CRC NOT IMPLEMENTED!");
-	return 0;
+	return DWT_ERROR;
 }
 
 int dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
