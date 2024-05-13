@@ -1224,6 +1224,19 @@ uint32_t dwt_readrxtimestamplo32(void);
 uint32_t dwt_readsystimestamphi32(void);
 
 /*! ------------------------------------------------------------------------------------------------------------------
+ * @brief This is used to read the system time
+ *
+ * input parameters
+ * @param timestamp - a pointer to a 4-byte buffer which will store the read system time
+ *
+ * output parameters
+ * @param timestamp - the timestamp buffer will contain the value after the function call
+ *
+ * no return value
+ */
+void dwt_readsystime(uint8_t * timestamp);
+
+/*! ------------------------------------------------------------------------------------------------------------------
  * @brief This is used to turn off the transceiver
  *
  * input parameters
