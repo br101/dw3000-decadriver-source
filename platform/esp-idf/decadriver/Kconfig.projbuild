@@ -1,0 +1,31 @@
+menu "Decadriver"
+
+    config DW3000_GPIO_IRQ
+        int "DW3000 GPIO for IRQ"
+        default -1
+
+    config DW3000_GPIO_RESET
+        int "DW3000 GPIO for RESET"
+        default -1
+
+    config DW3000_GPIO_WAKEUP
+        int "DW3000 GPIO for WAKEUP"
+        default -1
+
+    config DW3000_SPI_MOSI
+        int "DW3000 GPIO for MOSI"
+        default -1
+
+    config DW3000_SPI_MISO
+        int "DW3000 GPIO for MISO"
+        default -1
+
+    config DW3000_SPI_CLK
+        int "DW3000 GPIO for CLK"
+        default -1
+    
+    config DW3000_SPI_CS
+        int "DW3000 GPIO for CS"
+        default -1
+
+endmenu
