@@ -9,7 +9,8 @@
 
 #define DECA_SPI_HOST SPI2_HOST
 
-static const char* TAG = "DW3000";
+static const char* LOG_TAG = "DW3000";
+
 static spi_device_handle_t dw_spi;
 static spi_device_interface_config_t dw_cfg = {
 	.clock_speed_hz = 2000000, // Slow: 2MHz

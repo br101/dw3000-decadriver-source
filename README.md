@@ -10,14 +10,13 @@ At the moment the following platforms are supported:
 
 For ESP-IDF it can be used by adding it as a component by setting:
 ```
-  set(EXTRA_COMPONENT_DIRS components/dw3000-decadriver-source/platform/esp-idf)
+set(EXTRA_COMPONENT_DIRS components/dw3000-decadriver-source/platform/esp-idf)
 ```
-and by defining the necessary CONFIG for setting the SPI and GPIO pins for your board.
+and by defining the necessary CONFIG_DW3000 for setting the SPI and GPIO pins for your board (see `platform/esp-idf/decadriver/Kconfig`)
 
 ## NRF SDK v 17
 
 For NRF SDK you just add the necessary files to the build system.
-
 
 ## Usage and first steps
 
@@ -26,7 +25,6 @@ This is a minimal code fragment to check the basic functionality (reading the de
 ```
 dw3000_hw_init();
 dw3000_hw_reset();
-dw3000_hw_init_interrupt();
 uint32_t dev_id = dwt_readdevid();
 LOG_INF("DEVID %x", devid);
 ```

@@ -8,7 +8,7 @@
 #include "dw3000_spi.h"
 #include "log.h"
 
-static const char* TAG = "DW3000";
+static const char* LOG_TAG = "DW3000";
 static bool dw3000_interrupt_enabled;
 
 int dw3000_hw_init(void)

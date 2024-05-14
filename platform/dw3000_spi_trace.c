@@ -21,7 +21,7 @@ struct spi_dbg {
 	uint8_t bdy_len;
 };
 
-static const char* TAG = "DW3000_SPI";
+static const char* LOG_TAG = "DW3000_SPI";
 static struct spi_dbg dbgs[DBGS_CNT];
 static int dbgs_cnt;
 
