@@ -25,8 +25,8 @@ static const char* LOG_TAG = "DW3000_SPI";
 static struct spi_dbg dbgs[DBGS_CNT];
 static int dbgs_cnt;
 
-static char* spi_dbg_out_reg(bool rw, const uint8_t* headerBuffer,
-							 uint16_t headerLength)
+static char* spi_dbg_out_reg(const char* prefix, bool rw,
+							 const uint8_t* headerBuffer, uint16_t headerLength)
 {
 	static char buf[64];
 	uint8_t reg = 0;
@@ -63,8 +63,13 @@ static char* spi_dbg_out_reg(bool rw, const uint8_t* headerBuffer,
 		}
 	}
 
-	snprintf(buf, sizeof(buf), "SPI %s %02X:%02X (%s)", rw ? "READ" : "WRITE",
-			 reg, sub, modestr);
+	if (prefix) {
+		snprintf(buf, sizeof(buf), "%s: SPI %s %02X:%02X (%s)", prefix,
+				 rw ? "READ" : "WRITE", reg, sub, modestr);
+	} else {
+		snprintf(buf, sizeof(buf), "SPI %s %02X:%02X (%s)",
+				 rw ? "READ" : "WRITE", reg, sub, modestr);
+	}
 	return buf;
 }
 
@@ -101,11 +106,13 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 	dbgs[dbgs_cnt].bdy_len = bodyLength;
 
 #if DW3000_SPI_TRACE_REALTIME
-	char* s = spi_dbg_out_reg(dbgs[dbgs_cnt].rw, dbgs[dbgs_cnt].hdr,
-							  dbgs[dbgs_cnt].hdr_len);
 	if (dbgs[dbgs_cnt].bdy_len) {
+		char* s = spi_dbg_out_reg(LOG_TAG, dbgs[dbgs_cnt].rw,
+								  dbgs[dbgs_cnt].hdr, dbgs[dbgs_cnt].hdr_len);
 		LOG_HEXDUMP(s, dbgs[dbgs_cnt].bdy, dbgs[dbgs_cnt].bdy_len);
 	} else {
+		char* s = spi_dbg_out_reg(NULL, dbgs[dbgs_cnt].rw, dbgs[dbgs_cnt].hdr,
+								  dbgs[dbgs_cnt].hdr_len);
 		LOG_INF("%s", s);
 	}
 #endif
@@ -121,11 +128,11 @@ void dw3000_spi_trace_output(void)
 	LOG_INF("--- SPI DBG START");
 	for (int i = 0; i < DBGS_CNT && i < dbgs_cnt; i++) {
 		struct spi_dbg* d = &dbgs[i];
-		// hexdump("   SPI HEADER: ", d->hdr, d->hdr_len);
-		char* s = spi_dbg_out_reg(d->rw, d->hdr, d->hdr_len);
 		if (d->bdy_len) {
+			char* s = spi_dbg_out_reg(LOG_TAG, d->rw, d->hdr, d->hdr_len);
 			LOG_HEXDUMP(s, d->bdy, d->bdy_len);
 		} else {
+			char* s = spi_dbg_out_reg(NULL, d->rw, d->hdr, d->hdr_len);
 			LOG_INF("%s", s);
 		}
 	}
