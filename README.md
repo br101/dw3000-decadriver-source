@@ -18,6 +18,18 @@ and by defining the necessary CONFIG_DW3000 for setting the SPI and GPIO pins fo
 
 For NRF SDK you just add the necessary files to the build system.
 
+For example in a Makefile:
+```
+INCLUDES	+= -Ilib/decadriver/decadriver
+INCLUDES	+= -Ilib/decadriver/platform/nrf-sdk
+
+SRC			+= lib/decadriver/decadriver/deca_device.c
+SRC			+= lib/decadriver/platform/nrf-sdk/deca_port.c
+SRC			+= lib/decadriver/platform/nrf-sdk/dw3000_hw.c
+SRC			+= lib/decadriver/platform/nrf-sdk/dw3000_spi.c
+SRC			+= lib/decadriver/platform/nrf-sdk/dw3000_spi_trace.c
+```
+
 ## Usage and first steps
 
 This is a minimal code fragment to check the basic functionality (reading the device ID).
