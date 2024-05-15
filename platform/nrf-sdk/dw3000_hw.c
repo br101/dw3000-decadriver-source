@@ -21,8 +21,6 @@ int dw3000_hw_init(struct dw3000_hw_cfg* cfg)
 	/*
 	 * RESET: output low, open drain, no pull-up
 	 * normally used as input to see when DW1000 is ready
-	 * Ref:
-	 * https://devzone.nordicsemi.com/question/22112/nrf51822-gpio-as-open-collector-driver/
 	 */
 	if (cfg->reset_pin != -1) {
 		nrf_gpio_cfg_input(cfg->reset_pin, NRF_GPIO_PIN_NOPULL);
