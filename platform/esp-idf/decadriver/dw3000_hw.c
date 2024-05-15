@@ -58,7 +58,7 @@ int dw3000_hw_init(struct dw3000_hw_cfg* cfg)
 #if CONFIG_DW3000_GPIO_IRQ != -1
 static void dw3000_isr(void* args)
 {
-	while (gpio_get_level(cfg->irq_pin)) {
+	while (gpio_get_level(dw_hw_cfg->irq_pin)) {
 		dwt_isr();
 	}
 }
@@ -73,27 +73,27 @@ int dw3000_hw_init_interrupt(void)
 
 	gpio_config_t io_conf = {
 		.intr_type = GPIO_INTR_POSEDGE,
-		.pin_bit_mask = (uint64_t)1 << cfg->irq_pin,
+		.pin_bit_mask = (uint64_t)1 << dw_hw_cfg->irq_pin,
 		.mode = GPIO_MODE_INPUT,
 	};
 	gpio_config(&io_conf);
 
 	gpio_install_isr_service(0);
-	return gpio_isr_handler_add(cfg->irq_pin, dw3000_isr, NULL);
+	return gpio_isr_handler_add(dw_hw_cfg->irq_pin, dw3000_isr, NULL);
 }
 
 void dw3000_hw_interrupt_enable(void)
 {
-	if (cfg->irq_pincfg->irq_pin != -1) {
-		gpio_intr_enable(cfg->irq_pin);
+	if (dw_hw_cfg->irq_pin != -1) {
+		gpio_intr_enable(dw_hw_cfg->irq_pin);
 		dw3000_interrupt_enabled = true;
 	}
 }
 
 void dw3000_hw_interrupt_disable(void)
 {
-	if (cfg->irq_pincfg->irq_pin != -1) {
-		gpio_intr_disable(cfg->irq_pin);
+	if (dw_hw_cfg->irq_pin != -1) {
+		gpio_intr_disable(dw_hw_cfg->irq_pin);
 		dw3000_interrupt_enabled = false;
 	}
 }
