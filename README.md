@@ -45,4 +45,4 @@ LOG_INF("DEVID %x", devid);
 
 ## Next steps
 
-You can use this library to write your own code directly using the API provided by `decadriver` or you also include my higher level library [link](https://github.com/br101/libdeca) which adds some convenient functions, proper IRQ handling, and a simple implementation of two way ranging (TWR).
+You can use this library to write your own code directly using the API provided by `decadriver` or you also include my higher level library [libdeca](https://github.com/br101/libdeca) which adds some convenient functions, proper IRQ handling, and a simple implementation of two way ranging (TWR).
