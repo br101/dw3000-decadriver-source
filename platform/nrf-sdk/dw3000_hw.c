@@ -20,7 +20,7 @@ int dw3000_hw_init(struct dw3000_hw_cfg* cfg)
 
 	/*
 	 * RESET: output low, open drain, no pull-up
-	 * normally used as input to see when DW1000 is ready
+	 * normally used as input to see when DW3000 is ready
 	 */
 	if (cfg->reset_pin != -1) {
 		nrf_gpio_cfg_input(cfg->reset_pin, NRF_GPIO_PIN_NOPULL);
