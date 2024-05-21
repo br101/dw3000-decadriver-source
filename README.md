@@ -6,6 +6,12 @@ At the moment the following platforms are supported:
  * ESP-IDF (version 5.1.1)
  * NRF SDK (version 17.1.0)
 
+It has been tested with the following Qorvo chips:
+ * DW3110 (DEVID: 0xDECA0302) on DWM3000
+ * DW3120 (DEVID: 0xDECA0312)
+
+There are also branches for the binary-only library releases from Qorvo for reference.
+
 ## ESP-IDF
 
 For ESP-IDF it can be used by adding it as a component by setting:
