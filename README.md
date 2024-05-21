@@ -14,7 +14,7 @@ set(EXTRA_COMPONENT_DIRS components/dw3000-decadriver-source/platform/esp-idf)
 ```
 and by defining the necessary CONFIG_DW3000 for setting the SPI and GPIO pins for your board (see `platform/esp-idf/decadriver/Kconfig`)
 
-## NRF SDK v 17
+## NRF SDK
 
 For NRF SDK you just add the necessary files to the build system.
 
@@ -30,6 +30,8 @@ SRC			+= lib/decadriver/platform/nrf-sdk/dw3000_spi.c
 SRC			+= lib/decadriver/platform/nrf-sdk/dw3000_spi_trace.c
 ```
 
+And you also need to make sure the LOG_ macros are defined in a file called `log.h`
+
 ## Usage and first steps
 
 This is a minimal code fragment to check the basic functionality (reading the device ID).
@@ -40,3 +42,7 @@ dw3000_hw_reset();
 uint32_t dev_id = dwt_readdevid();
 LOG_INF("DEVID %x", devid);
 ```
+
+## Next steps
+
+You can use this library to write your own code directly using the API provided by `decadriver` or you also include my higher level library [link](https://github.com/br101/libdeca) which adds some convenient functions, proper IRQ handling, and a simple implementation of two way ranging (TWR).
