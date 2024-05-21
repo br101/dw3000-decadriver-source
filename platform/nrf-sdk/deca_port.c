@@ -1,7 +1,7 @@
 #include "nrf_delay.h"
 
 #include "deca_version.h"
-#if DW3000_DRIVER_VERSION == 0x040000
+#ifdef DW3000_DRIVER_VERSION // == 0x040000
 #include "deca_device_api.h"
 #else
 #include "deca_interface.h"
@@ -45,7 +45,7 @@ void deca_usleep(unsigned long time_us)
 	nrf_delay_us(time_us);
 }
 
-#if DW3000_DRIVER_VERSION == 0x040000
+#ifdef DW3000_DRIVER_VERSION // == 0x040000
 
 int readfromspi(uint16_t headerLength, uint8_t* headerBuffer,
 				uint16_t readLength, uint8_t* readBuffer)
@@ -67,7 +67,9 @@ int writetospiwithcrc(uint16_t headerLength, const uint8_t* headerBuffer,
 								bodyBuffer, crc8);
 }
 
-#elif DW3000_DRIVER_VERSION >= 0x060007
+#elif (defined DRIVER_VERSION_HEX) // >= 0x060007
+
+extern const struct dwt_probe_s dw3000_probe_interf;
 
 static const struct dwt_spi_s dw3000_spi_fct = {
 	.readfromspi = dw3000_spi_read,
