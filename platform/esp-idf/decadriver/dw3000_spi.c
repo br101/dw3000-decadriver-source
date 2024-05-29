@@ -45,7 +45,7 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 	};
 
 	// Initialize the SPI bus
-	ret = spi_bus_initialize(DW3000_SPI_HOST, &buscfg, SPI_DMA_DISABLED);
+	ret = spi_bus_initialize(DW3000_SPI_HOST, &buscfg, SPI_DMA_CH_AUTO);
 	assert(ret == ESP_OK);
 
 	// Add a device to the bus
