@@ -50,6 +50,7 @@ int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 			.pin_bit_mask = (uint64_t)1 << cfg->wakeup_pin,
 		};
 		gpio_config(&io_conf_wakeup);
+		gpio_set_level(dw_hw_cfg->wakeup_pin, 0);
 	}
 
 	return dw3000_spi_init(cfg);
@@ -138,7 +139,7 @@ void dw3000_hw_wakeup(void)
 		/* Use WAKEUP pin if available */
 		LOG_INF("WAKEUP PIN");
 		gpio_set_level(dw_hw_cfg->wakeup_pin, 1);
-		vTaskDelay(1);
+		vTaskDelay(1); // 500 usec
 		gpio_set_level(dw_hw_cfg->wakeup_pin, 0);
 	} else {
 		/* Use SPI CS pin */
@@ -147,8 +148,8 @@ void dw3000_hw_wakeup(void)
 		gpio_set_level(dw_hw_cfg->spi_cs_pin, 0);
 		vTaskDelay(1); // 500 usec
 		gpio_set_level(dw_hw_cfg->spi_cs_pin, 1);
-		vTaskDelay(1);
 	}
+	vTaskDelay(1);
 }
 
 /** set WAKEUP pin low if available */
