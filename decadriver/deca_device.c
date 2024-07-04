@@ -1294,16 +1294,6 @@ void dwt_configurestsmode(uint8_t stsMode)
     //then set the relevant bits according to configuration of the PHR Mode, PHR Rate, STS Protocol, SDC, PDOA Mode,
     dwt_modify32bitoffsetreg(SYS_CFG_ID, 0, ~(SYS_CFG_CP_SPC_BIT_MASK | SYS_CFG_CP_SDC_BIT_MASK),
         ((uint16_t)stsMode & DWT_STS_CONFIG_MASK) << SYS_CFG_CP_SPC_BIT_OFFSET);
-
-    if((stsMode & DWT_STS_MODE_ND) == DWT_STS_MODE_ND)
-    {
-        //configure lower preamble detection threshold for no data STS mode
-        dwt_write32bitoffsetreg(DTUNE3_ID, 0, PD_THRESH_NO_DATA);
-    }
-    else
-    {
-        dwt_write32bitoffsetreg(DTUNE3_ID, 0, PD_THRESH_DEFAULT);
-    }
 }
 
 /*! ------------------------------------------------------------------------------------------------------------------
@@ -1450,16 +1440,7 @@ int dwt_configure(dwt_config_t *config)
         dwt_setplenfine(0); //clear the setting in the FINE_PLEN register.
     }
 
-    if((config->stsMode & DWT_STS_MODE_ND) == DWT_STS_MODE_ND)
-    {
-        //configure lower preamble detection threshold for no data STS mode
-        dwt_write32bitoffsetreg(DTUNE3_ID, 0, PD_THRESH_NO_DATA);
-    }
-    else
-    {
-        //configure default preamble detection threshold for other modes
-        dwt_write32bitoffsetreg(DTUNE3_ID, 0, PD_THRESH_DEFAULT);
-    }
+    dwt_write32bitoffsetreg(DTUNE3_ID, 0, PD_THRESH_NO_DATA);
 
     /////////////////////////////////////////////////////////////////////////
     //CHAN_CTRL
@@ -1701,8 +1682,8 @@ void dwt_settxantennadelay(uint16_t txDelay)
  *                         The extended PHR mode allows to transmit frames of up to 1023 bytes (including 2 byte CRC)
  *                         if > 127 is programmed, DWT_PHRMODE_EXT needs to be set in the phrMode configuration
  *                         see dwt_configure function
- * @param txDataBytes    - Pointer to the user’s buffer containing the data to send.
- * @param txBufferOffset - This specifies an offset in the DW IC’s TX Buffer at which to start writing data.
+ * @param txDataBytes    - Pointer to the users buffer containing the data to send.
+ * @param txBufferOffset - This specifies an offset in the DW ICs TX Buffer at which to start writing data.
  *
  * output parameters
  *
@@ -3808,7 +3789,7 @@ void dwt_forcetrxoff(void)
  * @param enable - 1 to enable SNIFF mode, 0 to disable. When 0, all other parameters are not taken into account.
  * @param timeOn - duration of receiver ON phase, expressed in multiples of PAC size. The counter automatically adds 1 PAC
  *                 size to the value set. Min value that can be set is 1 (i.e. an ON time of 2 PAC size), max value is 15.
- * @param timeOff - duration of receiver OFF phase, expressed in multiples of 128/125 µs (~1 µs). Max value is 255.
+ * @param timeOff - duration of receiver OFF phase, expressed in multiples of 128/125 Âµs (~1 Âµs). Max value is 255.
  *
  * output parameters
  *
@@ -4385,7 +4366,7 @@ float dwt_convertrawtemperature(uint8_t raw_temp)
 {
     float realtemp;
 
-    // the User Manual formula is: Temperature (°C) = ( (SAR_LTEMP – OTP_READ(Vtemp @ 20°C) ) x 1.05)        // Vtemp @ 20°C
+    // the User Manual formula is: Temperature (Â°C) = ( (SAR_LTEMP - OTP_READ(Vtemp @ 20Â°C) ) x 1.05)        // Vtemp @ 20Â°C
     realtemp = (float)((raw_temp - pdw3000local->tempP) * 1.05f) + 20.0f;
     return realtemp;
 }
