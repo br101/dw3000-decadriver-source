@@ -15,7 +15,7 @@ struct dw3000_hw_cfg {
 	uint32_t spi_max_mhz;
 };
 
-int dw3000_hw_init(struct dw3000_hw_cfg* cfg);
+int dw3000_hw_init(const struct dw3000_hw_cfg* cfg);
 int dw3000_hw_init_interrupt(void);
 void dw3000_hw_fini(void);
 void dw3000_hw_reset(void);

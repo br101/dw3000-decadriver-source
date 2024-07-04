@@ -16,7 +16,7 @@
 
 static const char* LOG_TAG = "DW3000";
 static const nrfx_spim_t dw_spi = NRFX_SPIM_INSTANCE(DW3000_SPI_INSTANCE);
-static struct dw3000_hw_cfg* dw_hw_cfg;
+static const struct dw3000_hw_cfg* dw_hw_cfg;
 
 #if DW3000_SPI_TRACE
 void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
@@ -24,7 +24,7 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 						 uint16_t bodyLength);
 #endif
 
-int dw3000_spi_init(struct dw3000_hw_cfg* cfg)
+int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 {
 	nrfx_err_t ret;
 	dw_hw_cfg = cfg;

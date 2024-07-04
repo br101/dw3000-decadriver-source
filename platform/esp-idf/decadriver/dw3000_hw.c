@@ -9,10 +9,10 @@
 #include "log.h"
 
 static const char* LOG_TAG = "DW3000";
-static struct dw3000_hw_cfg* dw_hw_cfg;
+static const struct dw3000_hw_cfg* dw_hw_cfg;
 static bool dw3000_interrupt_enabled;
 
-int dw3000_hw_init(struct dw3000_hw_cfg* cfg)
+int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 {
 	LOG_INF("RESET:%d WAKEUP:%d IRQ:%d", cfg->reset_pin, cfg->wakeup_pin,
 			cfg->irq_pin);

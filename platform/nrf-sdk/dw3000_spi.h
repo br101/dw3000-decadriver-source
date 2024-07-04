@@ -6,7 +6,7 @@
 
 #define DW3000_SPI_TRACE 0
 
-int dw3000_spi_init(struct dw3000_hw_cfg* cfg);
+int dw3000_spi_init(const struct dw3000_hw_cfg* cfg);
 void dw3000_spi_fini(void);
 void dw3000_spi_wakeup(void);
 void dw3000_spi_speed_slow(void);
