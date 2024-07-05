@@ -1538,6 +1538,9 @@ int dwt_configure(dwt_config_t *config)
         dwt_and8bitoffsetreg(DGC_CFG_ID, 0x0, (uint8_t)~DGC_CFG_RX_TUNE_EN_BIT_MASK);
     }
 
+    // Undocumented register written by library (DTUNE4?)
+    dwt_modify32bitoffsetreg(0x60010, 0x0, 0x00FFFFFF, 0x14000000);
+
     ///////////////////////
     // PGF
     error = dwt_pgf_cal(1);  //if the RX calibration routine fails the device receiver performance will be severely affected, the application should reset and try again
