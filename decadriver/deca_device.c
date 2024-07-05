@@ -1427,7 +1427,8 @@ int dwt_configure(dwt_config_t *config)
 
     }
 
-    dwt_modify8bitoffsetreg(DTUNE0_ID, 0, (uint8_t) ~DTUNE0_PRE_PAC_SYM_BIT_MASK, config->rxPAC);
+    // 0x10 is DT0B4: Tuning bit 4 of digital tuning reg0
+    dwt_modify8bitoffsetreg(DTUNE0_ID, 0, (uint8_t) ~DTUNE0_PRE_PAC_SYM_BIT_MASK, config->rxPAC | 0x10);
 
     dwt_write8bitoffsetreg(STS_CFG0_ID, 0, sts_len-1);    /*Starts from 0 that is why -1*/
 
