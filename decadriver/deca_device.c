@@ -1293,7 +1293,7 @@ void dwt_configurestsmode(uint8_t stsMode)
     //SYS_CFG
     //clear the PHR Mode, PHR Rate, STS Protocol, SDC, PDOA Mode,
     //then set the relevant bits according to configuration of the PHR Mode, PHR Rate, STS Protocol, SDC, PDOA Mode,
-    dwt_modify32bitoffsetreg(SYS_CFG_ID, 0, ~(SYS_CFG_CP_SPC_BIT_MASK | SYS_CFG_CP_SDC_BIT_MASK),
+    dwt_modify16bitoffsetreg(SYS_CFG_ID, 0, (uint16_t)~(SYS_CFG_CP_SPC_BIT_MASK | SYS_CFG_CP_SDC_BIT_MASK),
         ((uint16_t)stsMode & DWT_STS_CONFIG_MASK) << SYS_CFG_CP_SPC_BIT_OFFSET);
 }
 
