@@ -1413,6 +1413,9 @@ int dwt_configure(dwt_config_t *config)
             dwt_modify16bitoffsetreg(STS_CONFIG_LO_ID, 2, (uint16_t)~(STS_CONFIG_LO_STS_MAN_TH_BIT_MASK >> 16), sts_mnth & 0x7F);
 
         }
+        else {
+            dwt_modify32bitoffsetreg(STS_CONFIG_HI_ID, 0, ~(STS_CONFIG_HI_RES_B0_BIT_MASK | STS_CONFIG_HI_STS_SS_EN_BIT_MASK), 0x94);
+        }
 
         //configure OPS tables for non-SCP mode
         if (preamble_len >= 256)

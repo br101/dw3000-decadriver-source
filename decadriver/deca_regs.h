@@ -2462,6 +2462,7 @@ extern "C" {
 #define STS_CONFIG_HI_FP_AGREED_EN_BIT_OFFSET (28U)
 #define STS_CONFIG_HI_FP_AGREED_EN_BIT_LEN    (1U)
 #define STS_CONFIG_HI_FP_AGREED_EN_BIT_MASK   0x10000000UL
+#define STS_CONFIG_HI_RES_B0_BIT_MASK   0x000000FFUL
 
 /******************************************************************************
 * @brief Bit definitions for register CIA_ADJUST
