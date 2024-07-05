@@ -1480,7 +1480,7 @@ int dwt_configure(dwt_config_t *config)
         dwt_write32bitoffsetreg(TX_CTRL_HI_ID, 0, RF_TXCTRL_CH9);
         dwt_write16bitoffsetreg(PLL_CFG_ID, 0, RF_PLL_CFG_CH9);
         // Setup RX analog for ch9
-        dwt_write32bitoffsetreg(RX_CTRL_HI_ID, 0, RF_RXCTRL_CH9);
+        //dwt_write32bitoffsetreg(RX_CTRL_HI_ID, 0, RF_RXCTRL_CH9);
     }
     else
     {
