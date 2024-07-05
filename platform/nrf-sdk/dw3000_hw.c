@@ -146,7 +146,7 @@ void dw3000_hw_wakeup(void)
 		/* Use WAKEUP pin if available */
 		LOG_INF("WAKEUP PIN");
 		nrf_gpio_pin_set(dw_hw_cfg->wakeup_pin);
-		rf_delay_us(500);
+		nrf_delay_us(500);
 		nrf_gpio_pin_clear(dw_hw_cfg->wakeup_pin);
 	} else {
 		/* Use SPI CS pin */
