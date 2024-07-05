@@ -1781,7 +1781,8 @@ extern "C" {
 #define PLL_CAL_ID                           0x90008              
 #define PLL_CAL_LEN                          (4U)                
 #define PLL_CAL_MASK                         0xFFFFFFFFUL        
-
+#define PLL_CAL_CAL_EN_MASK                  0x0100U
+#define PLL_CAL_USE_OLD_MASK                 0x2U
 
 
 /******************************************************************************

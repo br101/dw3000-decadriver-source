@@ -868,6 +868,7 @@ void dwt_setdwstate(int state)
     {
         //switch clock to auto - if coming here from INIT_RC the clock will be FOSC/4, need to switch to auto prior to setting auto INIT2IDLE bit
         dwt_force_clocks(FORCE_CLK_AUTO);
+        dwt_modify32bitoffsetreg(PLL_CAL_ID, 0x0, PLL_CAL_MASK, PLL_CAL_USE_OLD_MASK | PLL_CAL_CAL_EN_MASK); 
         dwt_or8bitoffsetreg(SEQ_CTRL_ID, 0x01, SEQ_CTRL_AINIT2IDLE_BIT_MASK>>8);
     }
     else if(state == DWT_DW_IDLE_RC)  //Change state to IDLE_RC and clear auto INIT2IDLE bit
