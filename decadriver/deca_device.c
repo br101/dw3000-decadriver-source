@@ -712,11 +712,11 @@ void _dwt_kick_ops_table_on_wakeup(void)
     {
     /* If preamble length >= 256 and set by dwt_configure(), the OPS table should be kicked off like so upon wakeup. */
     case (DWT_ALT_OPS | DWT_SEL_OPS0):
-        dwt_modify32bitoffsetreg(OTP_CFG_ID, 0, ~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_LONG | OTP_CFG_OPS_KICK_BIT_MASK);
+        dwt_modify16bitoffsetreg(OTP_CFG_ID, 0, (uint16_t)~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_LONG | OTP_CFG_OPS_KICK_BIT_MASK);
         break;
     /* If SCP mode is enabled by dwt_configure(), the OPS table should be kicked off like so upon wakeup. */
     case (DWT_ALT_OPS | DWT_SEL_OPS1):
-        dwt_modify32bitoffsetreg(OTP_CFG_ID, 0, ~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_SCP | OTP_CFG_OPS_KICK_BIT_MASK);
+        dwt_modify16bitoffsetreg(OTP_CFG_ID, 0, (uint16_t)~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_SCP | OTP_CFG_OPS_KICK_BIT_MASK);
         break;
     default:
         break;
@@ -1382,7 +1382,7 @@ int dwt_configure(dwt_config_t *config)
     {
         //configure OPS tables for SCP mode
         pdw3000local->sleep_mode |= DWT_ALT_OPS | DWT_SEL_OPS1;  //configure correct OPS table is kicked on wakeup
-        dwt_modify32bitoffsetreg(OTP_CFG_ID, 0, ~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_SCP | OTP_CFG_OPS_KICK_BIT_MASK);
+        dwt_modify16bitoffsetreg(OTP_CFG_ID, 0, (uint16_t)~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_SCP | OTP_CFG_OPS_KICK_BIT_MASK);
 
         dwt_write32bitoffsetreg(IP_CONFIG_LO_ID, 0, IP_CONFIG_LO_SCP);       //Set this if Ipatov analysis is used in SCP mode
         dwt_write32bitoffsetreg(IP_CONFIG_HI_ID, 0, IP_CONFIG_HI_SCP);
@@ -1418,11 +1418,11 @@ int dwt_configure(dwt_config_t *config)
         if (preamble_len >= 256)
         {
             pdw3000local->sleep_mode |= DWT_ALT_OPS | DWT_SEL_OPS0;
-            dwt_modify32bitoffsetreg(OTP_CFG_ID, 0, ~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_LONG | OTP_CFG_OPS_KICK_BIT_MASK);
+            dwt_modify16bitoffsetreg(OTP_CFG_ID, 0, (uint16_t)~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_LONG | OTP_CFG_OPS_KICK_BIT_MASK);
         }
         else
         {
-            dwt_modify32bitoffsetreg(OTP_CFG_ID, 0, ~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_SHORT | OTP_CFG_OPS_KICK_BIT_MASK);
+            dwt_modify16bitoffsetreg(OTP_CFG_ID, 0, (uint16_t)~(OTP_CFG_OPS_ID_BIT_MASK), DWT_OPSET_SHORT | OTP_CFG_OPS_KICK_BIT_MASK);
         }
 
     }
