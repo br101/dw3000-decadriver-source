@@ -3090,8 +3090,11 @@ void dwt_configciadiag(uint8_t enable_mask)
         dwt_or8bitoffsetreg(CIA_CONF_ID, 2, CIA_DIAGNOSTIC_OFF);
     }
 
-    //dwt_write8bitoffsetreg(RDB_DIAG_MODE_ID, 0, enable_mask >> 1);
-    dwt_modify8bitoffsetreg(RDB_DIAG_MODE_ID, 0, 0xFF, enable_mask);
+    if (enable_mask >> 1) {
+        dwt_write8bitoffsetreg(RDB_DIAG_MODE_ID, 0, enable_mask >> 1);
+    } else {
+        dwt_modify8bitoffsetreg(RDB_DIAG_MODE_ID, 0, 0xFF, 1);
+    }
 
     pdw3000local->cia_diagnostic = enable_mask;
 }
