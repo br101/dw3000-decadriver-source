@@ -10,7 +10,7 @@ It has been tested with the following Qorvo chips:
  * DW3110 (DEVID: 0xDECA0302) on DWM3000
  * DW3120 (DEVID: 0xDECA0312)
 
-There are also branches for the binary-only library releases from Qorvo for reference.
+There are also branches for the binary-only library releases from Qorvo for reference. I try to port important changes from the library to the master branch, at least as they are relevant to my projects and chips I have in use.
 
 ## ESP-IDF
 
