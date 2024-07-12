@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <dw3000_hw.h>
 
+#if ESP_PLATFORM
+#include <sdkconfig.h>
+#endif
+
 #ifndef CONFIG_DW3000_SPI_TRACE
 #define CONFIG_DW3000_SPI_TRACE 0
 #endif
