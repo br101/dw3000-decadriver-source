@@ -18,7 +18,7 @@ static const char* LOG_TAG = "DW3000";
 static const nrfx_spim_t dw_spi = NRFX_SPIM_INSTANCE(DW3000_SPI_INSTANCE);
 static const struct dw3000_hw_cfg* dw_hw_cfg;
 
-#if DW3000_SPI_TRACE
+#if CONFIG_DW3000_SPI_TRACE
 void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 						 uint16_t headerLength, const uint8_t* bodyBuffer,
 						 uint16_t bodyLength);
@@ -104,7 +104,7 @@ int dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
 {
 	decaIrqStatus_t stat = decamutexon();
 
-#if DW3000_SPI_TRACE
+#if CONFIG_DW3000_SPI_TRACE
 	dw3000_spi_trace_in(false, headerBuffer, headerLength, bodyBuffer,
 						bodyLength);
 #endif
@@ -174,7 +174,7 @@ int dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
 		goto exit;
 	}
 
-#if DW3000_SPI_TRACE
+#if CONFIG_DW3000_SPI_TRACE
 	dw3000_spi_trace_in(true, headerBuffer, headerLength, readBuffer,
 						readLength);
 #endif

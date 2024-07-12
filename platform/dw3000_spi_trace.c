@@ -5,24 +5,33 @@
 #include "dw3000_spi.h"
 #include "log.h"
 
-#if DW3000_SPI_TRACE
+#if CONFIG_DW3000_SPI_TRACE
 
-#define DW3000_SPI_TRACE_RAW	  0
-#define DW3000_SPI_TRACE_REALTIME 0 // Real-time output (normally too slow)
+// Real-time output (normally too slow)
+#ifndef CONFIG_DW3000_SPI_TRACE_REALTIME
+#define CONFIG_DW3000_SPI_TRACE_REALTIME 0
+#endif
 
-#define DBGS_CNT  256
-#define DBGS_BODY 12
+#ifndef CONFIG_DW3000_SPI_TRACE_CNT
+#define CONFIG_DW3000_SPI_TRACE_CNT 256
+#endif
+
+#ifndef CONFIG_DW3000_SPI_TRACE_BODY_LEN
+#define CONFIG_DW3000_SPI_TRACE_BODY_LEN 12
+#endif
+
+#define DW3000_SPI_TRACE_RAW 0
 
 struct spi_dbg {
 	bool rw;
 	uint8_t hdr[2];
 	uint8_t hdr_len;
-	uint8_t bdy[DBGS_BODY];
+	uint8_t bdy[CONFIG_DW3000_SPI_TRACE_BODY_LEN];
 	uint8_t bdy_len;
 };
 
 static const char* LOG_TAG = "DW3000_SPI";
-static struct spi_dbg dbgs[DBGS_CNT];
+static struct spi_dbg dbgs[CONFIG_DW3000_SPI_TRACE_CNT];
 static int dbgs_cnt;
 
 static char* spi_dbg_out_reg(const char* prefix, bool rw,
@@ -84,7 +93,7 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 	LOG_HEXDUMP("   SPI BODY: ", bodyBuffer, bodyLength);
 #endif
 
-	if (dbgs_cnt >= DBGS_CNT) {
+	if (dbgs_cnt >= CONFIG_DW3000_SPI_TRACE_CNT) {
 		LOG_ERR("ERR not enough debug space");
 		return;
 	}
@@ -98,14 +107,14 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 	}
 
 	dbgs[dbgs_cnt].hdr_len = headerLength;
-	if (bodyLength > DBGS_BODY) {
+	if (bodyLength > CONFIG_DW3000_SPI_TRACE_BODY_LEN) {
 		// LOG_ERR("ERR bdy len %d at #%d", bodyLength, dbgs_cnt);
-		bodyLength = DBGS_BODY;
+		bodyLength = CONFIG_DW3000_SPI_TRACE_BODY_LEN;
 	}
 	memcpy(dbgs[dbgs_cnt].bdy, bodyBuffer, bodyLength);
 	dbgs[dbgs_cnt].bdy_len = bodyLength;
 
-#if DW3000_SPI_TRACE_REALTIME
+#if CONFIG_DW3000_SPI_TRACE_REALTIME
 	if (dbgs[dbgs_cnt].bdy_len) {
 		char* s = spi_dbg_out_reg(LOG_TAG, dbgs[dbgs_cnt].rw,
 								  dbgs[dbgs_cnt].hdr, dbgs[dbgs_cnt].hdr_len);
@@ -124,9 +133,9 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 
 void dw3000_spi_trace_output(void)
 {
-#if DW3000_SPI_TRACE
+#if CONFIG_DW3000_SPI_TRACE
 	LOG_INF("--- SPI DBG START");
-	for (int i = 0; i < DBGS_CNT && i < dbgs_cnt; i++) {
+	for (int i = 0; i < CONFIG_DW3000_SPI_TRACE_CNT && i < dbgs_cnt; i++) {
 		struct spi_dbg* d = &dbgs[i];
 		if (d->bdy_len) {
 			char* s = spi_dbg_out_reg(LOG_TAG, d->rw, d->hdr, d->hdr_len);

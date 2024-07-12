@@ -4,7 +4,9 @@
 #include <stdint.h>
 #include <dw3000_hw.h>
 
-#define DW3000_SPI_TRACE 0
+#ifndef CONFIG_DW3000_SPI_TRACE
+#define CONFIG_DW3000_SPI_TRACE 0
+#endif
 
 int dw3000_spi_init(const struct dw3000_hw_cfg* cfg);
 void dw3000_spi_fini(void);
