@@ -28,4 +28,21 @@ menu "Decadriver"
         int "DW3000 GPIO for CS"
         default -1
 
+    config DW3000_SPI_TRACE
+        bool "Trace SPI transmissons"
+
+    config DW3000_SPI_TRACE_CNT
+        int "Number of SPI trace entries"
+        default 256
+        depends on DW3000_SPI_TRACE
+
+    config DW3000_SPI_TRACE_BODY_LEN
+        int "Maximum size of SPI trace body"
+        default 12
+        depends on DW3000_SPI_TRACE
+
+    config DW3000_SPI_TRACE_REALTIME
+        bool "Real-time output of SPI trace (normally too slow)"
+        depends on DW3000_SPI_TRACE
+
 endmenu
