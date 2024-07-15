@@ -18,6 +18,7 @@ struct dw3000_hw_cfg {
 int dw3000_hw_init(const struct dw3000_hw_cfg* cfg);
 int dw3000_hw_init_interrupt(void);
 void dw3000_hw_fini(void);
+int dw3000_hw_reinit(void);
 void dw3000_hw_reset(void);
 void dw3000_hw_wakeup(void);
 void dw3000_hw_wakeup_pin_low(void);

@@ -46,6 +46,11 @@ int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 	return dw3000_spi_init(cfg);
 }
 
+int dw3000_hw_reinit(void)
+{
+	return dw3000_hw_init(dw_hw_cfg);
+}
+
 static void dw3000_isr(nrfx_gpiote_pin_t pin, nrf_gpiote_polarity_t action)
 {
 	while (nrf_gpio_pin_read(dw_hw_cfg->irq_pin)) {

@@ -55,6 +55,11 @@ int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 	return dw3000_spi_init(cfg);
 }
 
+int dw3000_hw_reinit(void)
+{
+	return dw3000_hw_init(dw_hw_cfg);
+}
+
 #if CONFIG_DW3000_GPIO_IRQ != -1
 static void dw3000_isr(void* args)
 {
