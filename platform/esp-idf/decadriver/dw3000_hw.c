@@ -14,8 +14,8 @@ static bool dw3000_interrupt_enabled;
 
 int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 {
-	LOG_INF("RESET:%d WAKEUP:%d IRQ:%d", cfg->reset_pin, cfg->wakeup_pin,
-			cfg->irq_pin);
+	LOG_INF("HW Init (RESET:%d WAKEUP:%d IRQ:%d)", cfg->reset_pin,
+			cfg->wakeup_pin, cfg->irq_pin);
 
 	dw_hw_cfg = cfg;
 
@@ -115,7 +115,7 @@ void dw3000_hw_fini(void)
 	if (dw_hw_cfg->irq_pin != -1) {
 		if (dw3000_interrupt_enabled) {
 			gpio_intr_disable(dw_hw_cfg->irq_pin);
-	}
+		}
 		gpio_isr_handler_remove(dw_hw_cfg->irq_pin);
 	}
 
