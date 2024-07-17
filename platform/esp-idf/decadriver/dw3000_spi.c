@@ -45,15 +45,14 @@ int dw3000_spi_init(struct dw3000_hw_cfg* cfg)
 	};
 
 	// Initialize the SPI bus
-	ret = spi_bus_initialize(DW3000_SPI_HOST, &buscfg, SPI_DMA_DISABLED);
-	assert(ret == ESP_OK);
+	ret = spi_bus_initialize(DW3000_SPI_HOST, &buscfg, SPI_DMA_CH_AUTO);
+	if (ret != ESP_OK) {
+		return ret;
+	}
 
 	// Add a device to the bus
 	dw_cfg.spics_io_num = cfg->spi_cs_pin;
-	ret = spi_bus_add_device(DW3000_SPI_HOST, &dw_cfg, &dw_spi);
-	assert(ret == ESP_OK);
-
-	return ret;
+	return spi_bus_add_device(DW3000_SPI_HOST, &dw_cfg, &dw_spi);
 }
 
 static int dw3000_spi_speed_set(int hz)
@@ -78,12 +77,12 @@ void dw3000_spi_speed_fast(void)
 {
 	/* DW3000 apparently supports up to 38 MHz.
 	 * ESP documentation says: full-duplex transfers routed over the GPIO matrix
-	 * only support speeds up to 26MHz.
-	 * In my tests on the Makerfabs UWB DW3000 board at 24MHz we start to get
-	 * wrong results reading devid */
-
-	// TODO: Use 
-	dw3000_spi_speed_set(22000000); // 22 MHz
+	 * only support speeds up to 26MHz. */
+	if (dw_hw_cfg->spi_max_mhz > 26) {
+		LOG_WARN("SPI speed of %lu MHz may be too fast",
+				 dw_hw_cfg->spi_max_mhz);
+	}
+	dw3000_spi_speed_set(dw_hw_cfg->spi_max_mhz * 1000000);
 }
 
 void dw3000_spi_fini(void)

@@ -37,7 +37,7 @@ int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 		}
 		if (timeout <= 0) {
 			LOG_ERR("did not come out of reset");
-			return false;
+			return ESP_ERR_TIMEOUT;
 		}
 	}
 
