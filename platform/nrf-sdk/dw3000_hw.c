@@ -1,4 +1,5 @@
 #include <nrf_delay.h>
+#include <nrf_error.h>
 #include <nrf_gpio.h>
 #include <nrf_gpiote.h>
 #include <nrfx_gpiote.h>
@@ -13,8 +14,8 @@ static const struct dw3000_hw_cfg* dw_hw_cfg;
 
 int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 {
-	LOG_INF("RESET:%d WAKEUP:%d IRQ:%d", cfg->reset_pin, cfg->wakeup_pin,
-			cfg->irq_pin);
+	LOG_INF("HW Init (RESET:%d WAKEUP:%d IRQ:%d)", cfg->reset_pin,
+			cfg->wakeup_pin, cfg->irq_pin);
 
 	dw_hw_cfg = cfg;
 
@@ -32,7 +33,7 @@ int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
 		}
 		if (timeout <= 0) {
 			LOG_ERR("did not come out of reset");
-			return false;
+			return NRF_ERROR_TIMEOUT;
 		}
 	}
 
@@ -71,17 +72,17 @@ int dw3000_hw_init_interrupt()
 	nrfx_err_t ret = nrfx_gpiote_init();
 	if (ret != NRFX_SUCCESS && ret != NRFX_ERROR_INVALID_STATE) {
 		LOG_ERR("ERR: GPIOTE init failed");
-		return false;
+		return ret;
 	}
 
 	nrfx_gpiote_in_config_t config = NRFX_GPIOTE_CONFIG_IN_SENSE_LOTOHI(true);
 	nrfx_gpiote_in_init(dw_hw_cfg->irq_pin, &config, dw3000_isr);
 	if (ret != NRFX_SUCCESS && ret != NRFX_ERROR_INVALID_STATE) {
 		LOG_ERR("ERR: IRQ init failed");
-		return false;
+		return ret;
 	}
 	nrfx_gpiote_in_event_enable(dw_hw_cfg->irq_pin, true);
-	return true;
+	return NRF_SUCCESS;
 }
 
 void dw3000_hw_interrupt_enable(void)

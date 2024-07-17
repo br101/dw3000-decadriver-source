@@ -3,6 +3,7 @@
 
 #include "nrf_delay.h"
 #include "nrf_drv_gpiote.h"
+#include "nrf_error.h"
 #include "nrf_gpio.h"
 #include "nrfx_spim.h"
 
@@ -46,8 +47,8 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 
 	ret = nrfx_spim_init(&dw_spi, &spi_config, NULL, NULL);
 	if (ret != NRFX_SUCCESS) {
-		LOG_ERR("SPI init failed");
-		return false;
+		LOG_ERR("SPI init failed (error 0x%lx)", ret);
+		return ret;
 	}
 
 	/*
@@ -57,7 +58,8 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 	nrf_gpio_pin_set(cfg->spi_cs_pin);
 	nrf_gpio_cfg_output(cfg->spi_cs_pin);
 	nrf_gpio_pin_set(cfg->spi_cs_pin);
-	return true;
+
+	return NRF_SUCCESS;
 }
 
 void dw3000_spi_speed_slow(void)
