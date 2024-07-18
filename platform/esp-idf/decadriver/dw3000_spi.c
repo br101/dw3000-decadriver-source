@@ -57,7 +57,7 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 
 int dw3000_spi_reinit(void)
 {
-	dw3000_spi_init(dw_hw_cfg);
+	return dw3000_spi_init(dw_hw_cfg);
 }
 
 static int dw3000_spi_speed_set(int hz)
