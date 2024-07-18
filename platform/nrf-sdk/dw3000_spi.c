@@ -93,6 +93,11 @@ void dw3000_spi_fini(void)
 	// nrf_gpio_cfg_default(dw_hw_cfg->spi_clk_pin);
 }
 
+int dw3000_spi_reinit(void)
+{
+	return dw3000_spi_init(dw_hw_cfg);
+}
+
 int dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
 						 uint16_t bodyLength, const uint8_t* bodyBuffer,
 						 uint8_t crc8)

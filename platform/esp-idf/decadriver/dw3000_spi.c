@@ -55,6 +55,11 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 	return spi_bus_add_device(DW3000_SPI_HOST, &dw_cfg, &dw_spi);
 }
 
+int dw3000_spi_reinit(void)
+{
+	dw3000_spi_init(dw_hw_cfg);
+}
+
 static int dw3000_spi_speed_set(int hz)
 {
 	spi_bus_remove_device(dw_spi);
