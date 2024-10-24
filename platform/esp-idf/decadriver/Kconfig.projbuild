@@ -45,4 +45,11 @@ menu "Decadriver"
         bool "Real-time output of SPI trace (normally too slow)"
         depends on DW3000_SPI_TRACE
 
+    choice
+        prompt "Select  Chip"
+        config DW3000_CHIP_DW3000
+            bool "DW3000"
+        config DW3000_CHIP_DW3720
+            bool "DW3720/QM33xx"
+    endchoice
 endmenu
