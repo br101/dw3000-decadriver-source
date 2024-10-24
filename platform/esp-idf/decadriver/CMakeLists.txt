@@ -1,13 +1,13 @@
 
 set(srcs
-     ../../../dwt_uwb_driver/deca_compat.c
      ../../../dwt_uwb_driver/deca_interface.c
      ../../../dwt_uwb_driver/deca_rsl.c
      ../../../dwt_uwb_driver/lib/qmath/src/qmath.c
+     ../../deca_compat.c
      deca_port.c dw3000_hw.c dw3000_spi.c ../../dw3000_spi_trace.c)
 
 set(incl
-     . ../../../dwt_uwb_driver
+     . ../.. ../../../dwt_uwb_driver
      ../../../dwt_uwb_driver/lib/qmath/include)
 
 if (CONFIG_DW3000_CHIP_DW3000)
