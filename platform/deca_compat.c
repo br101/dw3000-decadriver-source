@@ -18,6 +18,10 @@
 #include "deca_private.h"
 #include "deca_ull.h"
 
+#ifdef ESP_PLATFORM
+#include <sdkconfig.h>
+#endif
+
 #if CONFIG_DW3000_CHIP_DW3720
 #include "dw3720/dw3720_deca_regs.h"
 #include "dw3720/df3720_deca_vals.h"
