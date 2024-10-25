@@ -70,6 +70,11 @@ int dw3000_spi_init(void)
 	return 0;
 }
 
+int dw3000_spi_reinit(void)
+{
+	return dw3000_spi_init();
+}
+
 void dw3000_spi_speed_slow(void)
 {
 	spi_cfg = &spi_cfgs[0];
