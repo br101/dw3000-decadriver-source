@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 #include "nrf_delay.h"
 #include "nrf_drv_gpiote.h"
@@ -80,7 +81,7 @@ void dw3000_spi_speed_fast(void)
 		nrf_spim_frequency_set(NRF_SPIM0, NRF_SPIM_FREQ_32M);
 #endif
 	} else {
-		LOG_ERR("Unknown SPI speed %ld MHz", dw_hw_cfg->spi_max_mhz);
+		LOG_ERR("Unknown SPI speed %" PRIu32 " MHz", dw_hw_cfg->spi_max_mhz);
 		return;
 	}
 }

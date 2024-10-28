@@ -84,7 +84,7 @@ void dw3000_spi_speed_fast(void)
 	 * ESP documentation says: full-duplex transfers routed over the GPIO matrix
 	 * only support speeds up to 26MHz. */
 	if (dw_hw_cfg->spi_max_mhz > 26) {
-		LOG_WARN("SPI speed of %lu MHz may be too fast",
+		LOG_WARN("SPI speed of %" PRIu32 " MHz may be too fast",
 				 dw_hw_cfg->spi_max_mhz);
 	}
 	dw3000_spi_speed_set(dw_hw_cfg->spi_max_mhz * 1000000);
@@ -97,15 +97,15 @@ void dw3000_spi_fini(void)
 }
 
 int32_t dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
-						 uint16_t bodyLength, const uint8_t* bodyBuffer,
-						 uint8_t crc8)
+							 uint16_t bodyLength, const uint8_t* bodyBuffer,
+							 uint8_t crc8)
 {
 	LOG_ERR("WRITE WITH CRC NOT IMPLEMENTED!");
 	return DWT_ERROR;
 }
 
 int32_t dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
-					 uint16_t bodyLength, const uint8_t* bodyBuffer)
+						 uint16_t bodyLength, const uint8_t* bodyBuffer)
 {
 	decaIrqStatus_t stat = decamutexon();
 
@@ -170,7 +170,7 @@ exit:
 }
 
 int32_t dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
-					uint16_t readLength, uint8_t* readBuffer)
+						uint16_t readLength, uint8_t* readBuffer)
 {
 	decaIrqStatus_t stat = decamutexon();
 	spi_device_acquire_bus(dw_spi, portMAX_DELAY);

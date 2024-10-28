@@ -31,7 +31,7 @@ static const struct device* spi;
 static struct spi_config spi_cfgs[2] = {0}; // configs for slow and fast
 static struct spi_config* spi_cfg;
 
-int dw3000_spi_init(void)
+int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 {
 	/* set common SPI config */
 	for (int i = 0; i < ARRAY_SIZE(spi_cfgs); i++) {
@@ -72,7 +72,7 @@ int dw3000_spi_init(void)
 
 int dw3000_spi_reinit(void)
 {
-	return dw3000_spi_init();
+	return dw3000_spi_init(NULL);
 }
 
 void dw3000_spi_speed_slow(void)
