@@ -52,7 +52,7 @@ int dw3000_spi_init(void)
 	 * Arduino shield it is not possible to use more than 16MHz */
 	spi_cfgs[1].frequency = 16000000;
 #else
-	spi_cfgs[1].frequency = CONFIG_DW3000_SPI_MAX_MHZ * 000000;
+	spi_cfgs[1].frequency = CONFIG_DW3000_SPI_MAX_MHZ * 1000000;
 #endif
 #endif
 
