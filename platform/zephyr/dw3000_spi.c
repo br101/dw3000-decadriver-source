@@ -85,9 +85,9 @@ void dw3000_spi_fini(void)
 	// TODO
 }
 
-int dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
-						 uint16_t bodyLength, const uint8_t* bodyBuffer,
-						 uint8_t crc8)
+int32_t dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
+							 uint16_t bodyLength, const uint8_t* bodyBuffer,
+							 uint8_t crc8)
 {
 	const struct spi_buf tx_buf[3] = {
 		{
@@ -111,8 +111,8 @@ int dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
 	return spi_transceive(spi, spi_cfg, &tx, NULL);
 }
 
-int dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
-					 uint16_t bodyLength, const uint8_t* bodyBuffer)
+int32_t dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
+						 uint16_t bodyLength, const uint8_t* bodyBuffer)
 {
 	const struct spi_buf tx_buf[2] = {
 		{
@@ -132,8 +132,8 @@ int dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
 	return spi_transceive(spi, spi_cfg, &tx, NULL);
 }
 
-int dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
-					uint16_t readLength, uint8_t* readBuffer)
+int32_t dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
+						uint16_t readLength, uint8_t* readBuffer)
 {
 	const struct spi_buf tx_buf = {
 		.buf = headerBuffer,

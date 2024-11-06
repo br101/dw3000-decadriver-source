@@ -107,6 +107,11 @@ void dw3000_hw_interrupt_disable(void)
 	}
 }
 
+bool dw3000_hw_interrupt_is_enabled(void)
+{
+	return true; // TODO
+}
+
 void dw3000_hw_fini(void)
 {
 	// TODO

@@ -101,8 +101,6 @@ const struct dwt_probe_s dw3000_probe_interf = {
 
 #elif DRIVER_VERSION_HEX >= 0x060007
 
-extern const struct dwt_probe_s dw3000_probe_interf;
-
 static const struct dwt_spi_s dw3000_spi_fct = {
 	.readfromspi = dw3000_spi_read,
 	.writetospi = dw3000_spi_write,

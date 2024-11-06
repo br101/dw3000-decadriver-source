@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
-if (CONFIG_DW3000)
+if(CONFIG_DW3000)
 
 zephyr_library()
 
@@ -8,8 +8,8 @@ zephyr_library_sources(
     deca_port.c
     dw3000_hw.c
     dw3000_spi.c
-    ../deca_compat.c
     ../dw3000_spi_trace.c
+    ../deca_compat.c
     ../../dwt_uwb_driver/deca_interface.c
     ../../dwt_uwb_driver/deca_rsl.c
     ../../dwt_uwb_driver/lib/qmath/src/qmath.c
@@ -23,4 +23,4 @@ zephyr_include_directories(..)
 zephyr_include_directories(../../dwt_uwb_driver)
 zephyr_include_directories(../../dwt_uwb_driver/lib/qmath/include)
 
-endif()
+endif(CONFIG_DW3000)
