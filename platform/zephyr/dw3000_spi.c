@@ -6,8 +6,8 @@
 
 #include <zephyr/device.h>
 #include <zephyr/drivers/spi.h>
-#include <zephyr/logging/log.h>
 #include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
 
 #include "dw3000_spi.h"
 
@@ -23,10 +23,11 @@ LOG_MODULE_DECLARE(dw3000, CONFIG_DW3000_LOG_LEVEL);
 #define DW_SPI	DT_PARENT(DT_INST(0, decawave_dw3000))
 
 static const struct device* spi;
-#if KERNEL_VERSION_MAJOR > 3 || (KERNEL_VERSION_MAJOR == 3 && KERNEL_VERSION_MINOR >= 4)
-	static struct spi_cs_control cs_ctrl = SPI_CS_CONTROL_INIT(DW_INST, 0);
+#if KERNEL_VERSION_MAJOR > 3                                                   \
+	|| (KERNEL_VERSION_MAJOR == 3 && KERNEL_VERSION_MINOR >= 4)
+static struct spi_cs_control cs_ctrl = SPI_CS_CONTROL_INIT(DW_INST, 0);
 #else
-	static struct spi_cs_control* cs_ctrl = SPI_CS_CONTROL_PTR_DT(DW_INST, 0);
+static struct spi_cs_control* cs_ctrl = SPI_CS_CONTROL_PTR_DT(DW_INST, 0);
 #endif
 static struct spi_config spi_cfgs[2] = {0}; // configs for slow and fast
 static struct spi_config* spi_cfg;
@@ -63,8 +64,7 @@ int dw3000_spi_init(void)
 		LOG_ERR("DW3000 SPI binding failed");
 		return -1;
 	} else {
-		LOG_INF("DW3000 (max %dMHz)",
-				spi_cfgs[1].frequency / 1000000);
+		LOG_INF("DW3000 (max %dMHz)", spi_cfgs[1].frequency / 1000000);
 	}
 
 	return 0;
@@ -179,7 +179,8 @@ int dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
 
 void dw3000_spi_wakeup()
 {
-#if KERNEL_VERSION_MAJOR > 3 || (KERNEL_VERSION_MAJOR == 3 && KERNEL_VERSION_MINOR >= 4)
+#if KERNEL_VERSION_MAJOR > 3                                                   \
+	|| (KERNEL_VERSION_MAJOR == 3 && KERNEL_VERSION_MINOR >= 4)
 	gpio_pin_set_dt(&cs_ctrl.gpio, 0);
 	k_sleep(K_USEC(500));
 	gpio_pin_set_dt(&cs_ctrl.gpio, 1);
