@@ -11,7 +11,6 @@
 
 static const char* LOG_TAG = "DW3000";
 static spi_device_handle_t dw_spi;
-static const struct dw3000_hw_cfg* dw_hw_cfg;
 
 static spi_device_interface_config_t dw_cfg = {
 	.clock_speed_hz = 2000000, // Slow: 2MHz
@@ -26,18 +25,18 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 						 uint16_t bodyLength);
 #endif
 
-int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
+int dw3000_spi_init(void)
 {
 	esp_err_t ret;
-	dw_hw_cfg = cfg;
 
-	LOG_INF("SPI Init (MOSI:%d MISO:%d CLK:%d CS:%d)", cfg->spi_mosi_pin,
-			cfg->spi_miso_pin, cfg->spi_clk_pin, cfg->spi_cs_pin);
+	LOG_INF("SPI Init (MOSI:%d MISO:%d CLK:%d CS:%d)", CONFIG_DW3000_SPI_MOSI,
+			CONFIG_DW3000_SPI_MISO, CONFIG_DW3000_SPI_CLK,
+			CONFIG_DW3000_SPI_CS);
 
 	spi_bus_config_t buscfg = {
-		.mosi_io_num = cfg->spi_mosi_pin,
-		.miso_io_num = cfg->spi_miso_pin,
-		.sclk_io_num = cfg->spi_clk_pin,
+		.mosi_io_num = CONFIG_DW3000_SPI_MOSI,
+		.miso_io_num = CONFIG_DW3000_SPI_MISO,
+		.sclk_io_num = CONFIG_DW3000_SPI_CLK,
 		.quadwp_io_num = -1,
 		.quadhd_io_num = -1,
 		.flags = SPICOMMON_BUSFLAG_MASTER,
@@ -51,13 +50,8 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 	}
 
 	// Add a device to the bus
-	dw_cfg.spics_io_num = cfg->spi_cs_pin;
+	dw_cfg.spics_io_num = CONFIG_DW3000_SPI_CS;
 	return spi_bus_add_device(DW3000_SPI_HOST, &dw_cfg, &dw_spi);
-}
-
-int dw3000_spi_reinit(void)
-{
-	return dw3000_spi_init(dw_hw_cfg);
 }
 
 static int dw3000_spi_speed_set(int hz)
@@ -83,11 +77,11 @@ void dw3000_spi_speed_fast(void)
 	/* DW3000 apparently supports up to 38 MHz.
 	 * ESP documentation says: full-duplex transfers routed over the GPIO matrix
 	 * only support speeds up to 26MHz. */
-	if (dw_hw_cfg->spi_max_mhz > 26) {
-		LOG_WARN("SPI speed of %" PRIu32 " MHz may be too fast",
-				 dw_hw_cfg->spi_max_mhz);
+	if (CONFIG_DW3000_SPI_MAX_MHZ > 26) {
+		LOG_WARN("SPI speed of %d MHz may be too fast",
+				 CONFIG_DW3000_SPI_MAX_MHZ);
 	}
-	dw3000_spi_speed_set(dw_hw_cfg->spi_max_mhz * 1000000);
+	dw3000_spi_speed_set(CONFIG_DW3000_SPI_MAX_MHZ * 1000000);
 }
 
 void dw3000_spi_fini(void)

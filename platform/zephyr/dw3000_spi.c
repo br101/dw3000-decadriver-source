@@ -31,7 +31,7 @@ static const struct device* spi;
 static struct spi_config spi_cfgs[2] = {0}; // configs for slow and fast
 static struct spi_config* spi_cfg;
 
-int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
+int dw3000_spi_init(void)
 {
 	/* set common SPI config */
 	for (int i = 0; i < ARRAY_SIZE(spi_cfgs); i++) {
@@ -52,7 +52,7 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 	 * Arduino shield it is not possible to use more than 16MHz */
 	spi_cfgs[1].frequency = 16000000;
 #else
-	spi_cfgs[1].frequency = 32000000;
+	spi_cfgs[1].frequency = CONFIG_DW3000_SPI_MAX_MHZ * 000000;
 #endif
 #endif
 

@@ -1,6 +1,6 @@
+#include <inttypes.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include <inttypes.h>
 
 #include "nrf_delay.h"
 #include "nrf_drv_gpiote.h"
@@ -8,6 +8,7 @@
 #include "nrf_gpio.h"
 #include "nrfx_spim.h"
 
+#include "config.h"
 #include "deca_device_api.h"
 #include "dw3000_spi.h"
 #include "log.h"
@@ -18,7 +19,6 @@
 
 static const char* LOG_TAG = "DW3000";
 static const nrfx_spim_t dw_spi = NRFX_SPIM_INSTANCE(DW3000_SPI_INSTANCE);
-static const struct dw3000_hw_cfg* dw_hw_cfg;
 
 #if CONFIG_DW3000_SPI_TRACE
 void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
@@ -26,18 +26,18 @@ void dw3000_spi_trace_in(bool rw, const uint8_t* headerBuffer,
 						 uint16_t bodyLength);
 #endif
 
-int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
+int dw3000_spi_init(void)
 {
 	nrfx_err_t ret;
-	dw_hw_cfg = cfg;
 
-	LOG_INF("SPI Init (MOSI:%d MISO:%d CLK:%d CS:%d)", cfg->spi_mosi_pin,
-			cfg->spi_miso_pin, cfg->spi_clk_pin, cfg->spi_cs_pin);
+	LOG_INF("SPI Init (MOSI:%d MISO:%d CLK:%d CS:%d)", CONFIG_DW3000_SPI_MOSI,
+			CONFIG_DW3000_SPI_MISO, CONFIG_DW3000_SPI_CLK,
+			CONFIG_DW3000_SPI_CS);
 
 	nrfx_spim_config_t spi_config = {
-		.sck_pin = cfg->spi_clk_pin,
-		.mosi_pin = cfg->spi_mosi_pin,
-		.miso_pin = cfg->spi_miso_pin,
+		.sck_pin = CONFIG_DW3000_SPI_CLK,
+		.mosi_pin = CONFIG_DW3000_SPI_MOSI,
+		.miso_pin = CONFIG_DW3000_SPI_MISO,
 		.ss_pin = NRFX_SPIM_PIN_NOT_USED,
 		.irq_priority = NRFX_SPIM_DEFAULT_CONFIG_IRQ_PRIORITY,
 		.orc = 0xFF,
@@ -56,9 +56,9 @@ int dw3000_spi_init(const struct dw3000_hw_cfg* cfg)
 	 * Slave select must be set as high before setting it as output,
 	 * otherwise it can cause glitches (nRF source code)
 	 */
-	nrf_gpio_pin_set(cfg->spi_cs_pin);
-	nrf_gpio_cfg_output(cfg->spi_cs_pin);
-	nrf_gpio_pin_set(cfg->spi_cs_pin);
+	nrf_gpio_pin_set(CONFIG_DW3000_SPI_CS);
+	nrf_gpio_cfg_output(CONFIG_DW3000_SPI_CS);
+	nrf_gpio_pin_set(CONFIG_DW3000_SPI_CS);
 
 	return NRF_SUCCESS;
 }
@@ -70,18 +70,18 @@ void dw3000_spi_speed_slow(void)
 
 void dw3000_spi_speed_fast(void)
 {
-	if (dw_hw_cfg->spi_max_mhz == 8) {
+	if (CONFIG_DW3000_SPI_MAX_MHZ == 8) {
 		nrf_spim_frequency_set(NRF_SPIM0, NRF_SPIM_FREQ_8M);
 #if defined(SPIM_FREQUENCY_FREQUENCY_M16)
-	} else if (dw_hw_cfg->spi_max_mhz == 16) {
+	} else if (CONFIG_DW3000_SPI_MAX_MHZ == 16) {
 		nrf_spim_frequency_set(NRF_SPIM0, NRF_SPIM_FREQ_16M);
 #endif
 #if defined(SPIM_FREQUENCY_FREQUENCY_M16)
-	} else if (dw_hw_cfg->spi_max_mhz == 32) {
+	} else if (CONFIG_DW3000_SPI_MAX_MHZ == 32) {
 		nrf_spim_frequency_set(NRF_SPIM0, NRF_SPIM_FREQ_32M);
 #endif
 	} else {
-		LOG_ERR("Unknown SPI speed %" PRIu32 " MHz", dw_hw_cfg->spi_max_mhz);
+		LOG_ERR("Unknown SPI speed %d MHz", CONFIG_DW3000_SPI_MAX_MHZ);
 		return;
 	}
 }
@@ -91,24 +91,19 @@ void dw3000_spi_fini(void)
 	nrfx_spim_uninit(&dw_spi);
 
 	// TODO?
-	// nrf_gpio_cfg_default(dw_hw_cfg->spi_clk_pin);
-}
-
-int dw3000_spi_reinit(void)
-{
-	return dw3000_spi_init(dw_hw_cfg);
+	// nrf_gpio_cfg_default(CONFIG_DW3000_SPI_CS);
 }
 
 int32_t dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,
-						 uint16_t bodyLength, const uint8_t* bodyBuffer,
-						 uint8_t crc8)
+							 uint16_t bodyLength, const uint8_t* bodyBuffer,
+							 uint8_t crc8)
 {
 	LOG_ERR("WRITE WITH CRC NOT IMPLEMENTED!");
 	return DWT_ERROR;
 }
 
 int32_t dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
-					 uint16_t bodyLength, const uint8_t* bodyBuffer)
+						 uint16_t bodyLength, const uint8_t* bodyBuffer)
 {
 	decaIrqStatus_t stat = decamutexon();
 
@@ -117,7 +112,7 @@ int32_t dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
 						bodyLength);
 #endif
 
-	nrf_gpio_pin_clear(dw_hw_cfg->spi_cs_pin);
+	nrf_gpio_pin_clear(CONFIG_DW3000_SPI_CS);
 
 	nrfx_spim_xfer_desc_t hdr = {
 		.p_tx_buffer = headerBuffer,
@@ -145,16 +140,16 @@ int32_t dw3000_spi_write(uint16_t headerLength, const uint8_t* headerBuffer,
 	}
 
 exit:
-	nrf_gpio_pin_set(dw_hw_cfg->spi_cs_pin);
+	nrf_gpio_pin_set(CONFIG_DW3000_SPI_CS);
 	decamutexoff(stat);
 	return ret == NRFX_SUCCESS ? DWT_SUCCESS : DWT_ERROR;
 }
 
 int32_t dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
-					uint16_t readLength, uint8_t* readBuffer)
+						uint16_t readLength, uint8_t* readBuffer)
 {
 	decaIrqStatus_t stat = decamutexon();
-	nrf_gpio_pin_clear(dw_hw_cfg->spi_cs_pin);
+	nrf_gpio_pin_clear(CONFIG_DW3000_SPI_CS);
 
 	nrfx_spim_xfer_desc_t hdr = {
 		.p_tx_buffer = headerBuffer,
@@ -188,7 +183,7 @@ int32_t dw3000_spi_read(uint16_t headerLength, uint8_t* headerBuffer,
 #endif
 
 exit:
-	nrf_gpio_pin_set(dw_hw_cfg->spi_cs_pin);
+	nrf_gpio_pin_set(CONFIG_DW3000_SPI_CS);
 	decamutexoff(stat);
 	return ret == NRFX_SUCCESS ? DWT_SUCCESS : DWT_ERROR;
 }

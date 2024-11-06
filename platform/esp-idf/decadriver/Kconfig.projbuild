@@ -28,6 +28,10 @@ menu "Decadriver"
         int "DW3000 GPIO for CS"
         default -1
 
+    config DW3000_SPI_MAX_MHZ
+        int "DW3000 Max SPI speed in MHz"
+        default 22
+
     config DW3000_SPI_TRACE
         bool "Trace SPI transmissons"
 

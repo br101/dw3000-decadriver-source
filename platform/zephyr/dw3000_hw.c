@@ -30,7 +30,7 @@ static const struct dw3000_config conf = {
 	.gpio_spi_pha = GPIO_DT_SPEC_GET_OR(DW_INST, spi_pha_gpios, {0}),
 };
 
-int dw3000_hw_init(const struct dw3000_hw_cfg* cfg)
+int dw3000_hw_init(void)
 {
 	/* Reset */
 	if (conf.gpio_reset.port) {
