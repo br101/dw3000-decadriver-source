@@ -60,7 +60,7 @@ int dw3000_hw_init(void)
 				conf.gpio_spi_pha.pin);
 	}
 
-	return dw3000_spi_init(cfg);
+	return dw3000_spi_init();
 }
 
 static void dw3000_hw_isr_work_handler(struct k_work* item)
