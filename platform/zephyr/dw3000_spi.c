@@ -82,7 +82,9 @@ void dw3000_spi_speed_fast(void)
 
 void dw3000_spi_fini(void)
 {
-	// TODO
+	// TODO: I can't find a SPI uninit function in Zephyr
+
+	gpio_pin_configure_dt(&spi_cfg->cs.gpio, GPIO_DISCONNECTED);
 }
 
 int32_t dw3000_spi_write_crc(uint16_t headerLength, const uint8_t* headerBuffer,

@@ -115,6 +115,17 @@ bool dw3000_hw_interrupt_is_enabled(void)
 void dw3000_hw_fini(void)
 {
 	// TODO
+	if (conf.gpio_irq.port) {
+		gpio_pin_interrupt_configure_dt(&conf.gpio_irq, GPIO_INT_DISABLE);
+		gpio_pin_configure_dt(&conf.gpio_irq, GPIO_DISCONNECTED);
+	}
+	if (conf.gpio_reset.port) {
+		gpio_pin_configure_dt(&conf.gpio_reset, GPIO_DISCONNECTED);
+	}
+	if (conf.gpio_wakeup.port) {
+		gpio_pin_configure_dt(&conf.gpio_wakeup, GPIO_DISCONNECTED);
+	}
+
 	dw3000_spi_fini();
 }
 
