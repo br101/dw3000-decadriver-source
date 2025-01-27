@@ -8,6 +8,7 @@
 #include <zephyr/drivers/spi.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/pm/device.h>
 
 #include "dw3000_spi.h"
 
@@ -67,6 +68,19 @@ int dw3000_spi_init(void)
 		LOG_INF("DW3000 (max %dMHz)", spi_cfgs[1].frequency / 1000000);
 	}
 
+	enum pm_device_state pstate;
+	int rc = pm_device_state_get(spi, &pstate);
+	if (rc) {
+		LOG_ERR("PM state get %d", rc);
+	}
+
+	if (pstate != PM_DEVICE_STATE_ACTIVE) {
+		rc = pm_device_action_run(spi, PM_DEVICE_ACTION_RESUME);
+		if (rc) {
+			LOG_ERR("PM resume %d", rc);
+		}
+	}
+
 	return 0;
 }
 
@@ -83,6 +97,11 @@ void dw3000_spi_speed_fast(void)
 void dw3000_spi_fini(void)
 {
 	// TODO: I can't find a SPI uninit function in Zephyr
+
+	int rc = pm_device_action_run(spi, PM_DEVICE_ACTION_SUSPEND);
+	if (rc) {
+		LOG_ERR("PM FINI suspend %d", rc);
+	}
 
 	gpio_pin_configure_dt(&spi_cfg->cs.gpio, GPIO_DISCONNECTED);
 }
