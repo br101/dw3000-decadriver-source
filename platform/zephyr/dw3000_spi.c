@@ -81,6 +81,9 @@ int dw3000_spi_init(void)
 		}
 	}
 
+	// initialized correctly at boot but after fini we need to reconfigure
+	gpio_pin_configure_dt(&spi_cfg->cs.gpio, GPIO_OUTPUT_HIGH);
+
 	return 0;
 }
 
