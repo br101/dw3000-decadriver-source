@@ -65,7 +65,9 @@ int dw3000_hw_init(void)
 
 static void dw3000_hw_isr_work_handler(struct k_work* item)
 {
-	dwt_isr();
+	while (gpio_pin_get_dt(&conf.gpio_irq)) {
+		dwt_isr();
+	}
 }
 
 static void dw3000_hw_isr(const struct device* dev, struct gpio_callback* cb,
