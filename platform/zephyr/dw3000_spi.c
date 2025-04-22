@@ -68,6 +68,7 @@ int dw3000_spi_init(void)
 		LOG_INF("DW3000 (max %dMHz)", spi_cfgs[1].frequency / 1000000);
 	}
 
+#if CONFIG_PM_DEVICE
 	enum pm_device_state pstate;
 	int rc = pm_device_state_get(spi, &pstate);
 	if (rc) {
@@ -80,6 +81,7 @@ int dw3000_spi_init(void)
 			LOG_ERR("PM resume %d", rc);
 		}
 	}
+#endif
 
 	// initialized correctly at boot but after fini we need to reconfigure
 	gpio_pin_configure_dt(&spi_cfg->cs.gpio, GPIO_OUTPUT_HIGH);
@@ -100,12 +102,12 @@ void dw3000_spi_speed_fast(void)
 void dw3000_spi_fini(void)
 {
 	// TODO: I can't find a SPI uninit function in Zephyr
-
+#if CONFIG_PM_DEVICE
 	int rc = pm_device_action_run(spi, PM_DEVICE_ACTION_SUSPEND);
 	if (rc) {
 		LOG_ERR("PM FINI suspend %d", rc);
 	}
-
+#endif
 	gpio_pin_configure_dt(&spi_cfg->cs.gpio, GPIO_DISCONNECTED);
 }
 
