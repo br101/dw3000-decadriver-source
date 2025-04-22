@@ -1,6 +1,6 @@
 # Multiplatform driver for Qorvo/Decawave DW3000
 
-This is a module with a driver for Qorvo/Decawave DW3000 for different platforms. It contains the source release of the "dwt_uwb_driver" from Qorvo (version 08.02.02 from DW3_QM33_SDK_1.0.1.zip), and the minimal platform code to make it work. The driver files released from Qorvo have been minimally modified to support only one DW3000 chip per board and to remove the big IOCTL function which is a huge waste of space on embedded platforms.
+This is a module with a driver for Qorvo/Decawave DW3000 for different platforms. It contains the source release of the "dwt_uwb_driver" from Qorvo (version 08.02.02 from DW3_QM33_SDK_1.0.2.zip), and the minimal platform code to make it work. The driver files released from Qorvo have been minimally modified to support only one DW3000 chip per board and to remove the big IOCTL function which is a huge waste of space on embedded platforms.
 
 At the moment the following platforms are supported:
  * Zephyr (version 3.6, NRF Connect SDK v2.7.0)
