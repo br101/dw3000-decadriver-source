@@ -72,3 +72,10 @@ LOG_INF("DEVID %x", devid);
 ## Next steps
 
 You can use this library to write your own code directly using the API provided by `decadriver` or you also include my higher level library [libdeca](https://github.com/br101/libdeca) which adds some convenient functions, proper IRQ handling, and a simple implementation of two way ranging (TWR).
+
+## Licenses
+
+The driver code from Qorvo is licensed according to their own license: https://github.com/br101/dw3000-decadriver-source/blob/master/dwt_uwb_driver/LICENSES/LicenseRef-QORVO-2.txt.
+
+My own code is under the ISC license: https://github.com/br101/dw3000-decadriver-source/blob/master/LICENSE.txt
+
