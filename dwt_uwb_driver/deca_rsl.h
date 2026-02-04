@@ -1,9 +1,7 @@
 /**
  * @file:     deca_rsl.h
- * 
- * @brief     This file contains the receive signal strength computations
  *
- * @author    Decawave Applications
+ * @brief     This file contains the receive signal strength computations
  *
  * @copyright SPDX-FileCopyrightText: Copyright (c) 2024 Qorvo US, Inc.
  *            SPDX-License-Identifier: LicenseRef-QORVO-2
@@ -17,9 +15,9 @@
 
 /*! ---------------------------------------------------------------------------------------------------
  * @brief Estimate signal power as described in DW3000 Datasheet using fixed point math
- * 
+ *
  * Also refered as RSSI. See rsl_calculate() for a detailed description.
- * 
+ *
  * input parameters
  * @param channel_impulse_response Channel Impulse Response Power value
  * @param quantization_factor power of two multiplied to C (21 or 17)
@@ -42,9 +40,9 @@ int16_t rsl_calculate_signal_power(
 
 /*! ---------------------------------------------------------------------------------------------------
  * @brief Estimate first path signal power as described in DW3000 Datasheet using fixed point math
- * 
+ *
  * See rsl_calculate() for a detailed description.
- * 
+ *
  * input parameters
  * @param F1 First Path Amplitude (point 1) magnitude value (2 fractional bits).
  * @param F2 First Path Amplitude (point 2) magnitude value (2 fractional bits).
