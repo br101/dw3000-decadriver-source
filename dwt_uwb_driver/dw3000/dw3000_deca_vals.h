@@ -4,8 +4,6 @@
  * @brief     DW3000 Register Definitions
  *            This file supports assembler and C development for DW3000 enabled devices
  *
- * @author    Decawave Applications
- *
  * @copyright SPDX-FileCopyrightText: Copyright (c) 2024 Qorvo US, Inc.
  *            SPDX-License-Identifier: LicenseRef-QORVO-2
  *
@@ -42,6 +40,10 @@ extern "C"
 
 #define LDO_TUNE_HI_VDDDIG_TRIM_OFFSET 20UL
 #define LDO_TUNE_HI_VDDDIG_COARSE_OFFSET 28UL
+
+/* Default VCO coarse tune values */
+#define DEFAULT_PLL_VTUNE_CODE_CH5 0xFUL
+#define DEFAULT_PLL_VTUNE_CODE_CH9 0xBUL
 
 typedef enum {
     VDDDIG_86mV = 0,
@@ -82,9 +84,14 @@ typedef enum {
 #define DWT_DGC_CFG1      0x1B6DA489UL
 #define PD_THRESH_OPTIMAL 0xAF5F35CCUL /* Optimal PD threshold. */
 
+#define STS_CONFIG_HI_B0_MASK 0xFFUL //!< STS_CONFIG_HI Byte 0 mask.
+#define RX_SFD_HLDOFF 0x20000000UL  //!< Number of symbols of accumulation to wait before checking for an SFD pattern, when Ipatov len > 64.
+#define RX_SFD_HLDOFF_DEF 0x14000000UL   //!< Default number of symbols of accumulation to wait before checking for an SFD pattern.
+
 #define IP_CONFIG_LO_SCP  0x0306UL
 #define IP_CONFIG_HI_SCP  0x00000000UL
 #define STS_CONFIG_LO_SCP 0x000C5A0AUL
+#define STS_CONFIG_LO_NTM 0x0AUL
 #define STS_CONFIG_HI_SCP 0x9DUL
 #define STS_CONFIG_HI_RES 0x94UL /* Sets STSQUAL_THRESH_64 = 0.6125 .. (60%) */
 
@@ -104,7 +111,7 @@ typedef enum {
 #define STS2_CIR_NB_SAMPLES     DWT_CIR_LEN_STS
 
 #define TX_BUFFER_ID            0x140000UL /* Transmit Data Buffer */
-#define SCRATCH_RAM_ID          0x160000UL
+#define SCRATCH_RAM_ID          0x160000UL /* 128 byte scratch buffer */
 #define AES_KEY_RAM_MEM_ADDRESS 0x170000 /*Address of the AES keys in RAM*/
 
 #define CIA_I_RX_TIME_LEN  5U
@@ -119,7 +126,7 @@ typedef enum {
 #define DB_MIN_DIAG_SIZE 32U /* size of diagnostic data (in bytes) when DW_CIA_DIAG_LOG_MIN is set */
 
 #define STS_ACC_CP_QUAL_SIGNTST 0x0800U /* sign test */
-#define STS_ACC_CP_QUAL_SIGNEXT 0xF000U /* 12 bit to 16 bit sign extension */
+#define STS_ACC_CP_QUAL_SIGNTOP 0x1000U
 #define STS_IV_LENGTH           16 /* CP initial value is 16 bytes or 128 bits*/
 
 #define STS_KEY_LENGTH 16 /* CP AES key is 16 bytes or 128 bits*/
@@ -127,8 +134,8 @@ typedef enum {
 #define PMSC_TXFINESEQ_ENABLE  0x4D28874UL
 #define PMSC_TXFINESEQ_DISABLE 0x0D20814UL
 
-#define TXRXSWITCH_TX   0x01011100
-#define TXRXSWITCH_AUTO 0x1C000000
+#define TXRXSWITCH_TX   0x01010100UL
+#define TXRXSWITCH_AUTO 0x1C000000UL
 
 #define ERR_RX_CAL_FAIL 0x1FFFFFFFUL
 
@@ -150,9 +157,10 @@ typedef enum {
 /* RX Signal OK mask. */
 #define SYS_STATUS_RXOK (DWT_INT_RXFCG_BIT_MASK | DWT_INT_CIA_DONE_BIT_MASK)
 
-// SYS_STATE_LO register errors
 #define DW_SYS_STATE_TXERR 0xD0000UL // TSE is in TX but TX is in IDLE in SYS_STATE_LO register
-#define DW_SYS_STATE_IDLE  0x3U // TSE is in IDLE (IDLE_PLL)
+#define DW_SYS_STATE_INIT       0x1U // TSE is in INIT state
+#define DW_SYS_STATE_IDLE_RC    0x2U // TSE is in IDLE_RC
+#define DW_SYS_STATE_IDLE       0x3U // TSE is in IDLE (IDLE_PLL)
 
 #define MAX_OFFSET_ALLOWED (0xFFF)
 #define MIN_INDIRECT_ADDR  (0x1000)

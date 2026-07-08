@@ -1,10 +1,8 @@
 /**
  * @file      dw3720_deca_regs.h
- * 
+ *
  * @brief     DW3720 Register Definitions
  *            This file supports Assembly and C development for DW3720 enabled devices
- *
- * @author    Decawave Applications
  *
  * @copyright SPDX-FileCopyrightText: Copyright (c) 2024 Qorvo US, Inc.
  *            SPDX-License-Identifier: LicenseRef-QORVO-2
@@ -237,13 +235,13 @@ extern "C"
 #define TX_FCTRL_TXB_OFFSET_BIT_MASK   0x3ff0000UL
 #define TX_FCTRL_TXPSR_BIT_OFFSET      (12U)
 #define TX_FCTRL_TXPSR_BIT_LEN         (4U)
-#define TX_FCTRL_TXPSR_BIT_MASK        0xf000U
+#define TX_FCTRL_TXPSR_BIT_MASK        0xF000UL
 #define TX_FCTRL_TR_BIT_OFFSET         (11U)
 #define TX_FCTRL_TR_BIT_LEN            (1U)
 #define TX_FCTRL_TR_BIT_MASK           0x800U
 #define TX_FCTRL_TXBR_BIT_OFFSET       (10U)
 #define TX_FCTRL_TXBR_BIT_LEN          (1U)
-#define TX_FCTRL_TXBR_BIT_MASK         0x400U
+#define TX_FCTRL_TXBR_BIT_MASK         0x400UL
 #define TX_FCTRL_TXFLEN_BIT_OFFSET     (0U)
 #define TX_FCTRL_TXFLEN_BIT_LEN        (10U)
 #define TX_FCTRL_TXFLEN_BIT_MASK       0x3ffU
@@ -1888,6 +1886,15 @@ extern "C"
 #define TX_CTRL_LO_ID   0x70018UL
 #define TX_CTRL_LO_LEN  (4U)
 #define TX_CTRL_LO_MASK 0xFFFFFFFFUL
+#define TX_CTRL_LO_TX_LOBUF_CTRL_BIT_OFFSET (20UL)
+#define TX_CTRL_LO_TX_LOBUF_CTRL_BIT_LEN    (4UL)
+#define TX_CTRL_LO_TX_LOBUF_CTRL_BIT_MASK   (0xF00000UL)
+#define TX_CTRL_LO_TX_VBULK_CTRL_BIT_OFFSET (18UL)
+#define TX_CTRL_LO_TX_VBULK_CTRL_BIT_LEN    (2UL)
+#define TX_CTRL_LO_TX_VBULK_CTRL_BIT_MASK   (0xC0000UL)
+#define TX_CTRL_LO_TX_VCASC_CTRL_BIT_OFFSET (16UL)
+#define TX_CTRL_LO_TX_VCASC_CTRL_BIT_LEN    (2UL)
+#define TX_CTRL_LO_TX_VCASC_CTRL_BIT_MASK   (0x30000UL)
 
 /******************************************************************************
 * @brief Bit definitions for register TX_CTRL_HI
@@ -1970,9 +1977,12 @@ extern "C"
 /******************************************************************************
  * @brief Bit definitions for register LDO_TUNE_LO
  **/
-#define LDO_TUNE_LO_ID   0x70040UL
-#define LDO_TUNE_LO_LEN  (4U)
-#define LDO_TUNE_LO_MASK 0xFFFFFFFFUL
+#define LDO_TUNE_LO_ID          0x70040UL
+#define LDO_TUNE_LO_LEN         (4U)
+#define LDO_TUNE_LO_MASK        0xFFFFFFFFUL
+#define LDO_PLL_TUNE_BIT_OFFSET (16UL)
+#define LDO_PLL_TUNE_BIT_LEN    (4UL)
+#define LDO_PLL_TUNE_BIT_MASK   0xF0000UL
 
 /******************************************************************************
  * @brief Bit definitions for register LDO_TUNE_HI
@@ -2212,15 +2222,27 @@ extern "C"
 /******************************************************************************
  * @brief Bit definitions for register PLL_CAL
  **/
-#define PLL_CAL_ID                     0x90008UL
-#define PLL_CAL_LEN                    (4U)
-#define PLL_CAL_MASK                   0xFFFFFFFFUL
-#define PLL_CAL_PLL_CAL_EN_BIT_OFFSET  (8U)
-#define PLL_CAL_PLL_CAL_EN_BIT_LEN     (1U)
-#define PLL_CAL_PLL_CAL_EN_BIT_MASK    0x100UL
-#define PLL_CAL_PLL_USE_OLD_BIT_OFFSET (1U)
-#define PLL_CAL_PLL_USE_OLD_BIT_LEN    (1U)
-#define PLL_CAL_PLL_USE_OLD_BIT_MASK   0x2U
+#define PLL_CAL_ID                          0x90008UL
+#define PLL_CAL_LEN                         (4U)
+#define PLL_CAL_MASK                        0xFFFFFFFFUL
+#define PLL_CAL_PLL_WD_EN_BIT_OFFSET        (19U)
+#define PLL_CAL_PLL_WD_EN_BIT_LEN           (1U)
+#define PLL_CAL_PLL_WD_EN_BIT_MASK          0x80000UL
+#define PLL_CAL_PLL_CAL_EN_BIT_OFFSET       (8U)
+#define PLL_CAL_PLL_CAL_EN_BIT_LEN          (1U)
+#define PLL_CAL_PLL_CAL_EN_BIT_MASK         0x100UL
+#define PLL_LOCK_DLY_BIT_OFFSET             (3U)
+#define PLL_LOCK_DLY_BIT_LEN                (5U)
+#define PLL_LOCK_DLY_BIT_MASK               (0xF8UL)
+#define PLL_CAL_PLL_TUNE_OVR_BIT_OFFSET     (2U)
+#define PLL_CAL_PLL_TUNE_OVR_BIT_LEN        (1U)
+#define PLL_CAL_PLL_TUNE_OVR_BIT_MASK       (0x4UL)
+#define PLL_CAL_PLL_USE_OLD_BIT_OFFSET      (1U)
+#define PLL_CAL_PLL_USE_OLD_BIT_LEN         (1U)
+#define PLL_CAL_PLL_USE_OLD_BIT_MASK        0x2U
+#define PLL_CH9_FB_OVR_BIT_OFFSET           (0U)
+#define PLL_CH9_FB_OVR_BIT_LEN              (1U)
+#define PLL_CH9_FB_OVR_BIT_MASK             (0x1UL)
 
 /******************************************************************************
  * @brief Bit definitions for register PLL_COMMON
@@ -2234,6 +2256,9 @@ extern "C"
 #define PLL_COMMON_PLL_BIAS_TRIM_BIT_OFFSET (13UL)
 #define PLL_COMMON_PLL_BIAS_TRIM_BIT_LEN (3U)
 #define PLL_COMMON_PLL_BIAS_TRIM_MASK 0x0000E000UL
+#define PLL_COMMON_DIG_PLL_WD_SEL_REF_CLK_DIVBY16_ULV_OFFSET (12UL)
+#define PLL_COMMON_DIG_PLL_WD_SEL_REF_CLK_DIVBY16_ULV_LEN (1U)
+#define PLL_COMMON_DIG_PLL_WD_SEL_REF_CLK_DIVBY16_ULV_MASK (0x00001000UL)
 
 /******************************************************************************
 * @brief Bit definitions for register PLL_STATUS
@@ -2581,8 +2606,6 @@ extern "C"
 #define CIA_DIAG_0_COE_PPM_BIT_OFFSET (0U)
 #define CIA_DIAG_0_COE_PPM_BIT_LEN    (13U)
 #define CIA_DIAG_0_COE_PPM_BIT_MASK   0x1fffU
-#define B12_U16_SIGN_EXTEND_TEST      ((uint16_t)1U << 12U) /* bit B12 as 12 = CIA_DIAG_0_COE_PPM_BIT_LEN-1 */
-#define B12_U16_SIGN_EXTEND_MASK      (0xF000U)
 
 /******************************************************************************
  * @brief Bit definitions for register CIA_DIAG_1
@@ -2600,6 +2623,7 @@ extern "C"
 #define IP_DIAG_0_PEAKLOC_BIT_OFFSET         (21U)
 #define IP_DIAG_0_PEAKLOC_BIT_LEN            (10U)
 #define IP_DIAG_0_PEAKLOC_BIT_MASK           0x7fe00000UL
+#define IP_DIAG_0_PEAKAMP_BIT_MASK           0x1FFFFFUL
 
 /******************************************************************************
  * @brief Bit definitions for register IP_DIAG_1
@@ -2709,6 +2733,9 @@ extern "C"
 #define STS_DIAG_0_ID   0xC005CUL
 #define STS_DIAG_0_LEN  (4U)
 #define STS_DIAG_0_MASK 0xFFFFFFFFUL
+#define STS_DIAG_0_PEAKLOC_BIT_OFFSET        (21U)
+#define STS_DIAG_0_PEAKLOC_BIT_MASK          0x3fe00000UL
+#define STS_DIAG_0_PEAKAMP_BIT_MASK          0x1FFFFFUL
 
 /******************************************************************************
 * @brief Bit definitions for register STS_DIAG_1
@@ -3349,7 +3376,7 @@ extern "C"
 #define CLK_CTRL_RX_CLK_SEL_BIT_MASK            0xcU
 #define CLK_CTRL_SYS_CLK_SEL_BIT_OFFSET         (0U)
 #define CLK_CTRL_SYS_CLK_SEL_BIT_LEN            (2U)
-#define CLK_CTRL_SYS_CLK_SEL_BIT_MASK           0x3U
+#define CLK_CTRL_SYS_CLK_SEL_BIT_MASK           0x3UL
 
 /******************************************************************************
  * @brief Bit definitions for register SEQ_CTRL
@@ -3384,6 +3411,9 @@ extern "C"
 #define SEQ_CTRL_AUTO_RX_SEQ_BIT_OFFSET   (10U)
 #define SEQ_CTRL_AUTO_RX_SEQ_BIT_LEN      (1U)
 #define SEQ_CTRL_AUTO_RX_SEQ_BIT_MASK     0x400UL
+#define SEQ_CTRL_AUTO_TX_SEQ_BIT_OFFSET   (9U)
+#define SEQ_CTRL_AUTO_TX_SEQ_BIT_LEN      (1U)
+#define SEQ_CTRL_AUTO_TX_SEQ_BIT_MASK     0x200UL
 #define SEQ_CTRL_AINIT2IDLE_BIT_OFFSET    (8U)
 #define SEQ_CTRL_AINIT2IDLE_BIT_LEN       (1U)
 #define SEQ_CTRL_AINIT2IDLE_BIT_MASK      0x100UL

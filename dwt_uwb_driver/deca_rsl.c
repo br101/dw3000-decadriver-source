@@ -1,9 +1,7 @@
 /**
  * @file:     deca_rsl.c
- * 
- * @brief     This file contains the receive signal strength computations
  *
- * @author    Decawave Applications
+ * @brief     This file contains the receive signal strength computations
  *
  * @copyright SPDX-FileCopyrightText: Copyright (c) 2024 Qorvo US, Inc.
  *            SPDX-License-Identifier: LicenseRef-QORVO-2
