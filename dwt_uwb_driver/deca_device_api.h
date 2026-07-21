@@ -393,66 +393,66 @@ extern "C"
     typedef enum
     {
         // Common for all devices
-        GPIO_PIN0_EXTTXE = 0x2 << 0,     /* Deprecated, only works for DW3000. The pin operates as the EXTTXE output (output TX state) */
-        GPIO_PIN1_EXTRXE = 0x2 << (1*3), /* Deprecated, only works for DW3000. The pin operates as the EXTRXE output (output RX state) */
-        GPIO_PIN2_RXLED  = 0x1 << (2*3), /* The pin operates as the RXLED output */
-        GPIO_PIN3_TXLED  = 0x1 << (3*3), /* The pin operates as the TXLED output */
-        GPIO_PIN4_EXTDA  = 0x1 << (4*3), /* Deprecated, only works for DW3000. The pin operates to support external DA/PA */
-        GPIO_PIN4_EXTTXE = 0x2 << (4*3), /* Deprecated, only works for DW3720. The pin operates as the EXTTXE output (output TX state) */
-        GPIO_PIN5_EXTTX  = 0x1 << (5*3), /* Deprecated, only works for DW3000. The pin operates to support external PA / TX enable */
-        GPIO_PIN5_EXTRXE = 0x2 << (5*3), /* Deprecated, only works for DW3720. The pin operates as the EXTRXE output (output RX state) */
-        GPIO_PIN6_EXTRX  = 0x1 << (6*3), /* Deprecated, only works for DW3000. The pin operates to support external LNA */
+        GPIO_PIN0_EXTTXE = UINT32_C(0x2) << 0,     /* Deprecated, only works for DW3000. The pin operates as the EXTTXE output (output TX state) */
+        GPIO_PIN1_EXTRXE = UINT32_C(0x2) << (1*3), /* Deprecated, only works for DW3000. The pin operates as the EXTRXE output (output RX state) */
+        GPIO_PIN2_RXLED  = UINT32_C(0x1) << (2*3), /* The pin operates as the RXLED output */
+        GPIO_PIN3_TXLED  = UINT32_C(0x1) << (3*3), /* The pin operates as the TXLED output */
+        GPIO_PIN4_EXTDA  = UINT32_C(0x1) << (4*3), /* Deprecated, only works for DW3000. The pin operates to support external DA/PA */
+        GPIO_PIN4_EXTTXE = UINT32_C(0x2) << (4*3), /* Deprecated, only works for DW3720. The pin operates as the EXTTXE output (output TX state) */
+        GPIO_PIN5_EXTTX  = UINT32_C(0x1) << (5*3), /* Deprecated, only works for DW3000. The pin operates to support external PA / TX enable */
+        GPIO_PIN5_EXTRXE = UINT32_C(0x2) << (5*3), /* Deprecated, only works for DW3720. The pin operates as the EXTRXE output (output RX state) */
+        GPIO_PIN6_EXTRX  = UINT32_C(0x1) << (6*3), /* Deprecated, only works for DW3000. The pin operates to support external LNA */
         // DW3000
-        DW3000_GPIO_PIN0_GPIO        = 0x0,
-        DW3000_GPIO_PIN0_RXOKLED     = 0x1,
-        DW3000_GPIO_PIN0_PDOA_SW_TX  = 0x2,
-        DW3000_GPIO_PIN1_GPIO        = 0x0 << (1*3),
-        DW3000_GPIO_PIN1_SFDLED      = 0x1 << (1*3),
-        DW3000_GPIO_PIN1_PDOA_SW_RX  = 0x2 << (1*3),
-        DW3000_GPIO_PIN2_GPIO        = 0x0 << (2*3),
-        DW3000_GPIO_PIN2_RXLED       = 0x1 << (2*3),
-        DW3000_GPIO_PIN2_PDOA_SW_RF1 = 0x2 << (2*3),
-        DW3000_GPIO_PIN3_GPIO        = 0x0 << (3*3),
-        DW3000_GPIO_PIN3_TXLED       = 0x1 << (3*3),
-        DW3000_GPIO_PIN3_PDOA_SW_RF2 = 0x2 << (3*3),
-        DW3000_GPIO_PIN4_GPIO        = 0x0 << (4*3),
-        DW3000_GPIO_PIN4_EXTPA       = 0x1 << (4*3),
-        DW3000_GPIO_PIN4_IRQ         = 0x2 << (4*3),
-        DW3000_GPIO_PIN5_GPIO        = 0x0 << (5*3),
-        DW3000_GPIO_PIN5_EXTTXE      = 0x1 << (5*3),
-        DW3000_GPIO_PIN6_GPIO        = 0x0 << (6*3),
-        DW3000_GPIO_PIN6_EXTRXE      = 0x1 << (6*3),
-        DW3000_GPIO_PIN7_SYNC        = 0x0 << (7*3),
-        DW3000_GPIO_PIN7_GPIO        = 0x1 << (7*3),
-        DW3000_GPIO_PIN8_IRQ         = 0x0 << (8*3),
-        DW3000_GPIO_PIN8_GPIO        = 0x1 << (8*3),
+        DW3000_GPIO_PIN0_GPIO        = UINT32_C(0x0),
+        DW3000_GPIO_PIN0_RXOKLED     = UINT32_C(0x1),
+        DW3000_GPIO_PIN0_PDOA_SW_TX  = UINT32_C(0x2),
+        DW3000_GPIO_PIN1_GPIO        = UINT32_C(0x0) << (1*3),
+        DW3000_GPIO_PIN1_SFDLED      = UINT32_C(0x1) << (1*3),
+        DW3000_GPIO_PIN1_PDOA_SW_RX  = UINT32_C(0x2) << (1*3),
+        DW3000_GPIO_PIN2_GPIO        = UINT32_C(0x0) << (2*3),
+        DW3000_GPIO_PIN2_RXLED       = UINT32_C(0x1) << (2*3),
+        DW3000_GPIO_PIN2_PDOA_SW_RF1 = UINT32_C(0x2) << (2*3),
+        DW3000_GPIO_PIN3_GPIO        = UINT32_C(0x0) << (3*3),
+        DW3000_GPIO_PIN3_TXLED       = UINT32_C(0x1) << (3*3),
+        DW3000_GPIO_PIN3_PDOA_SW_RF2 = UINT32_C(0x2) << (3*3),
+        DW3000_GPIO_PIN4_GPIO        = UINT32_C(0x0) << (4*3),
+        DW3000_GPIO_PIN4_EXTPA       = UINT32_C(0x1) << (4*3),
+        DW3000_GPIO_PIN4_IRQ         = UINT32_C(0x2) << (4*3),
+        DW3000_GPIO_PIN5_GPIO        = UINT32_C(0x0) << (5*3),
+        DW3000_GPIO_PIN5_EXTTXE      = UINT32_C(0x1) << (5*3),
+        DW3000_GPIO_PIN6_GPIO        = UINT32_C(0x0) << (6*3),
+        DW3000_GPIO_PIN6_EXTRXE      = UINT32_C(0x1) << (6*3),
+        DW3000_GPIO_PIN7_SYNC        = UINT32_C(0x0) << (7*3),
+        DW3000_GPIO_PIN7_GPIO        = UINT32_C(0x1) << (7*3),
+        DW3000_GPIO_PIN8_IRQ         = UINT32_C(0x0) << (8*3),
+        DW3000_GPIO_PIN8_GPIO        = UINT32_C(0x1) << (8*3),
         // DW3720
-        DW37XX_GPIO_PIN0_SPI2_CLK    = 0x0,
-        DW37XX_GPIO_PIN0_RXOKLED     = 0x1,
-        DW37XX_GPIO_PIN0_GPIO        = 0x2,
-        DW37XX_GPIO_PIN1_SPI2_MISO   = 0x0 << (1*3),
-        DW37XX_GPIO_PIN1_SFDLED      = 0x1 << (1*3),
-        DW37XX_GPIO_PIN1_GPIO        = 0x2 << (1*3),
-        DW37XX_GPIO_PIN2_IRQ2        = 0x0 << (2*3),
-        DW37XX_GPIO_PIN2_RXLED       = 0x1 << (2*3),
-        DW37XX_GPIO_PIN2_GPIO        = 0x2 << (2*3),
-        DW37XX_GPIO_PIN3_SPI2_MOSI   = 0x0 << (3*3),
-        DW37XX_GPIO_PIN3_TXLED       = 0x1 << (3*3),
-        DW37XX_GPIO_PIN3_GPIO        = 0x2 << (3*3),
-        DW37XX_GPIO_PIN4_GPIO        = 0x0 << (4*3),
-        DW37XX_GPIO_PIN4_COEX_IN     = 0x1 << (4*3),
-        DW37XX_GPIO_PIN4_PDOA_SW_TX  = 0x2 << (4*3),
-        DW37XX_GPIO_PIN5_GPIO        = 0x0 << (5*3),
-        DW37XX_GPIO_PIN5_COEX_OUT    = 0x1 << (5*3),
-        DW37XX_GPIO_PIN5_PDOA_SW_RX  = 0x2 << (5*3),
-        DW37XX_GPIO_PIN6_GPIO        = 0x0 << (6*3),
-        DW37XX_GPIO_PIN6_EXT_SW_RX   = 0x1 << (6*3),
-        DW37XX_GPIO_PIN6_PDOA_SW_RF1 = 0x2 << (6*3),
-        DW37XX_GPIO_PIN7_SYNC        = 0x0 << (7*3),
-        DW37XX_GPIO_PIN7_GPIO        = 0x1 << (7*3),
-        DW37XX_GPIO_PIN7_PDOA_SW_RF2 = 0x2 << (7*3),
-        DW37XX_GPIO_PIN8_IRQ         = 0x0 << (8*3),
-        DW37XX_GPIO_PIN8_GPIO        = 0x1 << (8*3)
+        DW37XX_GPIO_PIN0_SPI2_CLK    = UINT32_C(0x0),
+        DW37XX_GPIO_PIN0_RXOKLED     = UINT32_C(0x1),
+        DW37XX_GPIO_PIN0_GPIO        = UINT32_C(0x2),
+        DW37XX_GPIO_PIN1_SPI2_MISO   = UINT32_C(0x0) << (1*3),
+        DW37XX_GPIO_PIN1_SFDLED      = UINT32_C(0x1) << (1*3),
+        DW37XX_GPIO_PIN1_GPIO        = UINT32_C(0x2) << (1*3),
+        DW37XX_GPIO_PIN2_IRQ2        = UINT32_C(0x0) << (2*3),
+        DW37XX_GPIO_PIN2_RXLED       = UINT32_C(0x1) << (2*3),
+        DW37XX_GPIO_PIN2_GPIO        = UINT32_C(0x2) << (2*3),
+        DW37XX_GPIO_PIN3_SPI2_MOSI   = UINT32_C(0x0) << (3*3),
+        DW37XX_GPIO_PIN3_TXLED       = UINT32_C(0x1) << (3*3),
+        DW37XX_GPIO_PIN3_GPIO        = UINT32_C(0x2) << (3*3),
+        DW37XX_GPIO_PIN4_GPIO        = UINT32_C(0x0) << (4*3),
+        DW37XX_GPIO_PIN4_COEX_IN     = UINT32_C(0x1) << (4*3),
+        DW37XX_GPIO_PIN4_PDOA_SW_TX  = UINT32_C(0x2) << (4*3),
+        DW37XX_GPIO_PIN5_GPIO        = UINT32_C(0x0) << (5*3),
+        DW37XX_GPIO_PIN5_COEX_OUT    = UINT32_C(0x1) << (5*3),
+        DW37XX_GPIO_PIN5_PDOA_SW_RX  = UINT32_C(0x2) << (5*3),
+        DW37XX_GPIO_PIN6_GPIO        = UINT32_C(0x0) << (6*3),
+        DW37XX_GPIO_PIN6_EXT_SW_RX   = UINT32_C(0x1) << (6*3),
+        DW37XX_GPIO_PIN6_PDOA_SW_RF1 = UINT32_C(0x2) << (6*3),
+        DW37XX_GPIO_PIN7_SYNC        = UINT32_C(0x0) << (7*3),
+        DW37XX_GPIO_PIN7_GPIO        = UINT32_C(0x1) << (7*3),
+        DW37XX_GPIO_PIN7_PDOA_SW_RF2 = UINT32_C(0x2) << (7*3),
+        DW37XX_GPIO_PIN8_IRQ         = UINT32_C(0x0) << (8*3),
+        DW37XX_GPIO_PIN8_GPIO        = UINT32_C(0x1) << (8*3)
     } dwt_gpio_pin_e;
 
     /* Mask that can be used in e.g ull_setgpiomode to use the GPIO mode of all GPIO pins on a DW3000 IC */
@@ -649,7 +649,7 @@ extern "C"
     } dwt_rf_port_ctrl_e;
 
 // Conversion factor to convert clock offset from PPM to ratio
-#define CLOCK_OFFSET_PPM_TO_RATIO (1.0 / (1 << 26))
+#define CLOCK_OFFSET_PPM_TO_RATIO (1.0 / (UINT32_C(1) << 26))
 
 #define TEMP_INIT -127
 #define DEFAULT_XTAL_TRIM_TEMP 25
