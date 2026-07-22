@@ -360,7 +360,7 @@ void ull_dis_otp_ips(dwchip_t *dw, int mode);
 void ull_setrxtimeout(dwchip_t *dw, uint32_t on_time);
 void ull_setpreambledetecttimeout(dwchip_t *dw, uint16_t timeout);
 static void ull_aon_write(dwchip_t *dw, uint16_t aon_address, uint8_t aon_write_data);
-static uint8_t ull_aon_read(dwchip_t *dw, uint16_t aon_address);
+uint8_t ull_aon_read(dwchip_t *dw, uint16_t aon_address);
 float ull_convertrawtemperature(dwchip_t *dw, uint8_t raw_temp);
 uint16_t ull_readtempvbat(dwchip_t *dw);
 static uint16_t ull_readsar(dwchip_t *dw, uint8_t input_mux, uint8_t attn);
@@ -7735,9 +7735,9 @@ int32_t ull_adjust_tx_power(uint16_t boost, uint32_t ref_tx_power, uint8_t chann
         // If current_boost within the margin, keep incrementing to potentially reach ideal value but keep the closest value as best solution
         if(current_boost > lower_limit && current_boost < upper_limit)
         {
-            if((uint16_t)abs((int32_t)target_boost - (int32_t)current_boost) <= best_boost_abs)
+            if((uint16_t)abs((int)target_boost - (int)current_boost) <= best_boost_abs)
             {
-                best_boost_abs = (uint16_t)abs((int32_t)target_boost - (int32_t)current_boost);
+                best_boost_abs = (uint16_t)abs((int)target_boost - (int)current_boost);
                 best_boost = current_boost;
                 best_index = i;
                 best_coarse_gain = ref_coarse_gain;

@@ -6867,9 +6867,9 @@ int32_t ull_adjust_tx_power(uint16_t boost, uint32_t ref_tx_power, uint8_t chann
         // If current_boost within the margin, keep incrementing to potentially reach ideal value but keep the closest value as best solution
         if((current_boost > lower_limit) && (current_boost < upper_limit))
         {
-            if((uint16_t)abs(((int32_t)target_boost - (int32_t)current_boost)) <= best_boost_abs)
+            if((uint16_t)abs(((int)target_boost - (int)current_boost)) <= best_boost_abs)
             {
-                best_boost_abs = (uint16_t)abs(((int32_t)target_boost - (int32_t)current_boost));
+                best_boost_abs = (uint16_t)abs(((int)target_boost - (int)current_boost));
                 best_boost = current_boost;
                 best_index = i;
                 best_coarse_gain = ref_coarse_gain;
