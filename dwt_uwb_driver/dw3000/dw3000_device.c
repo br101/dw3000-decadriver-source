@@ -1402,7 +1402,7 @@ uint8_t ull_geticrefvolt(dwchip_t *dw)
  *
  * returns the 8 bit V temp value as programmed in the factory
  */
-static uint8_t ull_geticreftemp(dwchip_t *dw)
+uint8_t ull_geticreftemp(dwchip_t *dw)
 {
     return LOCAL_DATA(dw)->tempP;
 }
